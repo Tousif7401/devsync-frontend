@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DevSync AI Intro</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" rel="stylesheet"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #1e2130; display: flex; align-items: center; justify-content: center; }
+
+  svg text { font-family: 'Manrope', 'Arial Black', sans-serif; font-weight: 800; }
+
+  /* === DARK WIPE === */
+  #dark-wipe {
+    animation: darkWipe 0.45s cubic-bezier(0.4,0,0.2,1) 0.1s forwards;
+    transform-origin: left center;
+  }
+  @keyframes darkWipe {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+  }
+
+  /* === PILL: 5 stage animation ===
+     Stage 1 (0.4s): tiny circle at center → fades in
+     Stage 2 (0.55→0.9s): expands into wide pill, moves left
+     Stage 3 (0.9→1.2s): shrinks back to circle at left of text
+     Stage 4 (1.25→1.7s): zips right across text, shrinks to tiny period dot
+     Stage 5 (2.3s+): turns fully red, sits as period
+     Stage 6 (2.8s+): fades out
+  */
+  #pill {
+    animation:
+      pill-in     0.2s ease            0.4s  both,
+      pill-grow   0.35s cubic-bezier(0.34,1.4,0.64,1) 0.55s forwards,
+      pill-shrink 0.3s cubic-bezier(0.4,0,0.2,1)      0.9s  forwards,
+      pill-zip    0.45s cubic-bezier(0.6,0,0.4,1)     1.25s forwards,
+      pill-red    0.25s ease                           1.72s forwards,
+      pill-out    0.45s ease                           2.5s  forwards;
+  }
+  @keyframes pill-in {
+    from { opacity:0; r:8; }
+    to   { opacity:1; r:22; }
+  }
+  @keyframes pill-grow {
+    /* circle r=22 cx=480 → pill: cx moves left, rx grows wide */
+    /* We animate via transform on a group */
+    from { rx:22; ry:22; }
+    to   { rx:22; ry:22; }
+  }
+  @keyframes pill-red {
+    to { fill: #e63946; }
+  }
+  @keyframes pill-out {
+    to { opacity:0; }
+  }
+
+  /* === TEXT === */
+  #logo-text {
+    animation: text-in 0.4s ease 0.75s both;
+  }
+  @keyframes text-in {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
+  #txt-pulse { animation: txt-darken 0.5s ease 0.9s  forwards; fill: #aab0b8; }
+  #txt-sync  { animation: txt-darken 0.5s ease 1.1s  forwards; fill: #aab0b8; }
+  @keyframes txt-darken {
+    to { fill: #1e2130; }
+  }
+  #txt-period {
+    opacity: 0;
+    animation: period-show 0.05s ease 2.5s forwards;
+    fill: #e63946;
+  }
+  @keyframes period-show { to { opacity:1; } }
+
+  /* === WHOLE SCENE OUT === */
+  #scene {
+    animation: scene-out 0.55s ease 3s forwards;
+  }
+  @keyframes scene-out { to { opacity:0; } }
+
+  /* replay button */
+  #replay {
+    position: fixed; bottom:16px; right:16px;
+    padding: 6px 14px; border-radius:999px;
+    background: rgba(255,255,255,0.15); color:white;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-size:13px; cursor:pointer;
+    font-family:'Manrope',sans-serif;
+    backdrop-filter:blur(8px);
+    opacity:0;
+    animation: show-replay 0.3s ease 3.6s forwards;
+  }
+  @keyframes show-replay { to { opacity:1; } }
+</style>
+</head>
+<body>
+
+<svg id="scene" viewBox="0 0 960 720" width="960" height="540" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- BG -->
+  <rect width="960" height="720" fill="#e8e8e8"/>
+
+  <!-- Dark wipe left→right out -->
+  <rect id="dark-wipe" width="960" height="720" fill="#1e2130" transform-origin="0 0"/>
+
+  <!-- ── PILL ANIMATION (JS driven for precision) ── -->
+  <rect id="pill-rect" rx="22" ry="22" fill="#8a9099" opacity="0"/>
+
+  <!-- ── TEXT ── -->
+  <g id="logo-text">
+    <text id="txt-pulse" x="302" y="383" font-size="58" letter-spacing="-1.5">Pulse</text>
+    <text id="txt-sync"  x="486" y="383" font-size="58" letter-spacing="-1.5">Sync</text>
+    <text id="txt-period" x="658" y="383" font-size="58" letter-spacing="-1.5">.</text>
+  </g>
+
+</svg>
+
+<button id="replay" onclick="location.reload()">↺ Replay</button>
+
+<script>
+  // Animate the pill rect with precise keyframes via JS
+  const pill = document.getElementById('pill-rect');
+
+  // Keyframe states: [time_ms, x, y, width, height, rx, opacity, fill]
+  // The pill center stays at y=360 (rect y = center - height/2)
+  const CY = 360; // vertical center
+
+  // Helper to set pill state
+  function setPill(x, y, w, h, rx, opacity, fill) {
+    pill.setAttribute('x', x);
+    pill.setAttribute('y', y);
+    pill.setAttribute('width', w);
+    pill.setAttribute('height', h);
+    pill.setAttribute('rx', rx);
+    pill.setAttribute('ry', rx);
+    pill.setAttribute('opacity', opacity);
+    if(fill) pill.setAttribute('fill', fill);
+  }
+
+  // Easing functions
+  function easeOut(t) { return 1 - Math.pow(1-t, 3); }
+  function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+  function easeSpring(t) {
+    // slight overshoot
+    const c4 = (2*Math.PI)/3;
+    if(t===0) return 0; if(t===1) return 1;
+    return Math.pow(2,-10*t)*Math.sin((t*10-0.75)*c4)+1;
+  }
+
+  function lerp(a,b,t) { return a+(b-a)*t; }
+
+  // Animation stages
+  const stages = [
+    // [startMs, durationMs, fromState, toState, easeFn]
+    // State: {cx, cy, w, h, rx, opacity, fill}
+    // Stage 0: appear as small circle at center
+    { start: 400, dur: 200,
+      from: {cx:480, cy:360, w:16, h:16, rx:8, op:0, fill:'#8a9099'},
+      to:   {cx:480, cy:360, w:44, h:44, rx:22, op:1, fill:'#8a9099'},
+      ease: easeOut },
+    // Stage 1: grow into wide pill, anchor moves to left of text area
+    { start: 550, dur: 350,
+      from: {cx:480, cy:360, w:44,  h:44, rx:22, op:1, fill:'#8a9099'},
+      to:   {cx:400, cy:360, w:190, h:44, rx:22, op:1, fill:'#8a9099'},
+      ease: easeSpring },
+    // Stage 2: shrink back into circle
+    { start: 900, dur: 300,
+      from: {cx:400, cy:360, w:190, h:44, rx:22, op:1, fill:'#8a9099'},
+      to:   {cx:325, cy:360, w:44,  h:44, rx:22, op:1, fill:'#8a9099'},
+      ease: easeInOut },
+    // Stage 3: zip right across text, shrinking to tiny period dot
+    { start: 1250, dur: 450,
+      from: {cx:325, cy:360, w:44, h:44, rx:22, op:1, fill:'#8a9099'},
+      to:   {cx:666, cy:372, w:14, h:14, rx:7,  op:1, fill:'#d44'},
+      ease: easeInOut },
+    // Stage 4: hold at period position (pill-red handles color via CSS)
+    // Stage 5: fade out
+    { start: 2500, dur: 400,
+      from: {cx:666, cy:372, w:14, h:14, rx:7, op:1, fill:'#e63946'},
+      to:   {cx:666, cy:372, w:14, h:14, rx:7, op:0, fill:'#e63946'},
+      ease: easeOut },
+  ];
+
+  let startTime = null;
+
+  function frame(ts) {
+    if(!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+
+    // Find the last completed stage and current stage
+    let currentState = stages[0].from;
+
+    for(let i = 0; i < stages.length; i++) {
+      const s = stages[i];
+      if(elapsed < s.start) break;
+      if(elapsed >= s.start && elapsed < s.start + s.dur) {
+        const t = s.ease((elapsed - s.start) / s.dur);
+        currentState = {
+          cx:   lerp(s.from.cx,   s.to.cx,   t),
+          cy:   lerp(s.from.cy,   s.to.cy,   t),
+          w:    lerp(s.from.w,    s.to.w,    t),
+          h:    lerp(s.from.h,    s.to.h,    t),
+          rx:   lerp(s.from.rx,   s.to.rx,   t),
+          op:   lerp(s.from.op,   s.to.op,   t),
+          fill: s.from.fill,
+        };
+        break;
+      } else if(elapsed >= s.start + s.dur) {
+        currentState = s.to;
+      }
+    }
+
+    setPill(
+      currentState.cx - currentState.w/2,
+      currentState.cy - currentState.h/2,
+      currentState.w,
+      currentState.h,
+      currentState.rx,
+      currentState.op,
+      currentState.fill
+    );
+
+    if(elapsed < 3600) requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+</script>
+</body>
+</html>
