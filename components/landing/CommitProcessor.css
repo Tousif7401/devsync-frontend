@@ -1,0 +1,88 @@
+/* CSS animations for better performance than Framer Motion continuous animations */
+
+/* Rotation animation - slow (for header) */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Rotation animation - fast (for step loaders) */
+@keyframes spin-fast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Bounce/Scale animation for completed state */
+@keyframes scaleBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply animations - only when active class is present */
+.spin-animation {
+  animation: spin 2s linear infinite;
+}
+
+.spin-animation-fast {
+  animation: spin-fast 1s linear infinite;
+}
+
+.pulse-animation {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.scale-bounce {
+  animation: scaleBounce 0.3s ease-out;
+}
+
+/* Optimize animations with GPU acceleration */
+.spin-animation,
+.spin-animation-fast,
+.pulse-animation,
+.scale-bounce {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Pause animations when not in viewport or when page is hidden */
+@media (prefers-reduced-motion: reduce) {
+  .spin-animation,
+  .spin-animation-fast,
+  .pulse-animation,
+  .scale-bounce {
+    animation: none;
+  }
+}
+
+/* Pause animations when component is paused (out of view) */
+[data-animations-paused="true"] .spin-animation,
+[data-animations-paused="true"] .spin-animation-fast,
+[data-animations-paused="true"] .pulse-animation {
+  animation-play-state: paused !important;
+}
