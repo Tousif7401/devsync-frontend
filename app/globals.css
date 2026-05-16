@@ -2,127 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Manrope Font - Using Google Fonts with optimized loading */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+/* Titan Design System - Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* Switzer Font - From Draftr website */
-@font-face {
-  font-family: 'Switzer';
-  src: url('/fonts/switzer/switzer-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Switzer';
-  src: url('/fonts/switzer/switzer-medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Satoshi Font */
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-Italic.woff') format('woff');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-MediumItalic.woff') format('woff');
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-BoldItalic.woff') format('woff');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-Black.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-BlackItalic.woff') format('woff');
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi/Satoshi-LightItalic.woff') format('woff');
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
+/* Titan Design System - CSS Variables */
 :root {
+  /* Colors */
+  --color-midnight-ink: #111111;
+  --color-canvas-white: #ffffff;
+  --color-off-white-sage: #f3efeb;
+  --color-faded-stone: #e9eaeb;
+  --color-gunmetal-gray: #615e5b;
+  --color-soft-concrete: #d8d3cc;
+  --color-action-black: #000000;
+  --color-highlight-orange: #ff9900;
+
+  /* Typography — Font Families */
+  --font-geist: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Typography — Scale */
+  --text-caption: 10px;
+  --leading-caption: 1.2;
+  --text-body-sm: 12px;
+  --leading-body-sm: 1.2;
+  --text-body: 14px;
+  --leading-body: 1.2;
+  --text-body-lg: 16px;
+  --leading-body-lg: 1.2;
+  --text-heading-sm: 20px;
+  --leading-heading-sm: 1.2;
+  --text-heading: 24px;
+  --leading-heading: 1.2;
+  --text-heading-lg: 32px;
+  --leading-heading-lg: 1.2;
+  --text-display-sm: 40px;
+  --leading-display-sm: 1.2;
+  --text-display: 60px;
+  --leading-display: 1.2;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-52: 52px;
+  --spacing-56: 56px;
+  --spacing-60: 60px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-88: 88px;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 80px;
+  --card-padding: 28px;
+  --element-gap: 24px;
+
+  /* Border Radius */
+  --radius-lg: 10px;
+  --radius-md: 20px;
+  --radius-sm: 10px;
+  --radius-xl: 20px;
+  --radius-2xl: 20px;
+  --radius-3xl: 32px;
+  --radius-4xl: 140px;
+  --radius-5xl: 160px;
+
+  /* Named Radii */
+  --radius-cards: 32px;
+  --radius-small: 10px;
+  --radius-medium: 20px;
+  --radius-buttons: 160px;
+  --radius-navigation: 140px;
+
+  /* Surfaces */
+  --surface-canvas-white: #ffffff;
+  --surface-off-white-sage: #f3efeb;
+  --surface-faded-stone: #e9eaeb;
+
+  /* Legacy Shadcn Variables (for compatibility) */
   --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  --foreground: 0 0% 6.7%;
   --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card-foreground: 0 0% 6.7%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 221.2 83.2% 53.3%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --popover-foreground: 0 0% 6.7%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 95.3%;
+  --secondary-foreground: 0 0% 6.7%;
+  --muted: 0 0% 95.3%;
+  --muted-foreground: 0 0% 38%;
+  --accent: 0 0% 95.3%;
+  --accent-foreground: 0 0% 6.7%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 220 10% 91.8%;
+  --input: 220 10% 91.8%;
+  --ring: 220 10% 91.8%;
   --radius: 0.5rem;
 }
 
@@ -133,7 +123,7 @@
   --card-foreground: 210 40% 98%;
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
+  --primary: 210 40% 98%;
   --primary-foreground: 222.2 47.4% 11.2%;
   --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
@@ -156,13 +146,13 @@
   }
 
   html {
-    background-color: #101011;
+    background-color: var(--surface-canvas-white);
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: #101011;
-    color: hsl(var(--foreground));
+    background-color: var(--surface-canvas-white);
+    color: var(--color-midnight-ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -189,23 +179,23 @@
     display: none;
   }
 
-  /* Custom scrollbar color */
+  /* Custom scrollbar color - Titan Design System */
   *::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
   *::-webkit-scrollbar-track {
-    background: #1a1a1a;
+    background: var(--color-faded-stone);
   }
   *::-webkit-scrollbar-thumb {
-    background: #06b6d4;
+    background: var(--color-soft-concrete);
     border-radius: 4px;
   }
   *::-webkit-scrollbar-thumb:hover {
-    background: #22d3ee;
+    background: var(--color-gunmetal-gray);
   }
   *::-webkit-scrollbar-corner {
-    background: #1a1a1a;
+    background: var(--color-faded-stone);
   }
 
   .sr-only {
@@ -221,7 +211,7 @@
   }
 }
 
-/* Cybernetic Bento Grid Styles */
+/* Titan Bento Grid Styles */
 .cybernetic-bento-container {
   position: relative;
   padding: 4rem 0;
@@ -235,9 +225,9 @@
 }
 
 .bento-item {
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
+  background-color: var(--color-off-white-sage);
+  border: 1px solid var(--color-faded-stone);
+  border-radius: var(--radius-cards);
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
@@ -254,7 +244,7 @@
   border-radius: inherit;
   background: radial-gradient(
     800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-    rgba(123, 97, 255, 0.15),
+    rgba(0, 0, 0, 0.03),
     transparent 40%
   );
   opacity: 0;
@@ -268,7 +258,7 @@
 }
 
 .bento-item:hover {
-  border-color: rgba(123, 97, 255, 0.3);
+  border-color: var(--color-soft-concrete);
 }
 
 .bento-item > * {

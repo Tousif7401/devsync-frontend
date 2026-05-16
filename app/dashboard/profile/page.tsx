@@ -129,7 +129,7 @@ export default function ProfilePage() {
                     {avatar ? (
                       <Image
                         src={avatar}
-                        alt={user?.name}
+                        alt={user?.name ?? "User avatar"}
                         width={128}
                         height={128}
                         className="w-full h-full object-cover"
@@ -216,7 +216,7 @@ export default function ProfilePage() {
                   ) : (
                     <Button
                       onClick={() => setEditMode(true)}
-                      variant="outline"
+                      variant="hollow"
                       size="default"
                     >
                       Edit Profile

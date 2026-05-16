@@ -26,7 +26,6 @@
 .logoloop__track {
   display: flex;
   width: max-content;
-  transform: translateZ(0);
   user-select: none;
   position: relative;
   z-index: 0;
@@ -138,7 +137,7 @@
   );
 }
 
-/* Visual fade overlay - black gradient (128px = 8rem each side) */
+/* Visual fade overlay - Mercury design gradient (128px = 8rem each side) */
 .logoloop--fade::before,
 .logoloop--fade::after {
   content: '';
@@ -154,7 +153,7 @@
   left: 0;
   background: linear-gradient(
     to right,
-    rgb(0, 0, 0) 0%,
+    var(--surface-abyss, #171721) 0%,
     transparent 100%
   );
 }
@@ -163,7 +162,7 @@
   right: 0;
   background: linear-gradient(
     to left,
-    rgb(0, 0, 0) 0%,
+    var(--surface-abyss, #171721) 0%,
     transparent 100%
   );
 }

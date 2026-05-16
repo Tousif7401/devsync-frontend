@@ -8,8 +8,7 @@ import ContentOutputTypes from '@/components/landing/ContentOutputTypes';
 import FeatureCards from '@/components/landing/FeatureCards';
 import WorkflowSteps from '@/components/landing/WorkflowSteps';
 import DevSyncOverviewCard from '@/components/landing/DevSyncOverviewCard';
-import AnoAI from '@/components/ui/animated-shader-background';
-import { Tiles } from '@/components/ui/tiles';
+import { BackgroundPaths } from '@/components/ui/background-paths';
 import { Navbar, NavBody, NavItems, MobileNav, NavbarLogo, NavbarButton, MobileNavHeader, MobileNavToggle, MobileNavMenu } from '@/components/ui/resizable-navbar';
 import { Button } from '@/components/ui/neon-button';
 import { ArrowRight, Github, Linkedin, Zap, Shield, Clock, TrendingUp } from 'lucide-react';
@@ -160,10 +159,10 @@ export default function Home() {
 
   return (
     <>
-      <main className="min-h-screen bg-darkBg overflow-x-hidden w-full relative">
+      <main className="min-h-screen bg-canvasWhite overflow-x-hidden w-full relative">
         {/* Navigation */}
         <Navbar>
-          <NavBody className={isScrolled ? 'bg-darkBg/90 backdrop-blur-xl border-b border-white/5' : ''}>
+          <NavBody className={isScrolled ? 'bg-canvasWhite/95 backdrop-blur-xl border-b border-softConcrete' : ''}>
             <NavbarLogo />
             <div className="flex items-center gap-8">
               <NavItems items={navItems} />
@@ -171,7 +170,7 @@ export default function Home() {
                 <NavbarButton variant="secondary">Login</NavbarButton>
               </Link>
               <Link href="/demo">
-                <Button variant="solid" size="default" className="!py-2 !px-6 !text-base">Request for Demo</Button>
+                <Button variant="solid" size="default" className="!py-2.5 !px-6 !text-base">Request for Demo</Button>
               </Link>
             </div>
         </NavBody>
@@ -194,7 +193,7 @@ export default function Home() {
                   key={`mobile-link-${idx}`}
                   href={item.link}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="relative text-gray-400 hover:text-white text-xl font-medium font-heading py-2 block bg-[#0a0a0a]"
+                  className="relative font-geist text-midnightInk text-xl font-medium py-2 block"
                 >
                   {item.name}
                 </a>
@@ -221,19 +220,11 @@ export default function Home() {
           </MobileNav>
         </Navbar>
 
-        {/* Hero Section - Feeta AI style animations */}
-        <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 pt-20 sm:pt-24 overflow-hidden w-full" style={{ contentVisibility: 'auto' }}>
-          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30">
-            <AnoAI />
-          </div>
+        {/* Hero Section - Titan Design System */}
+        <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 pt-20 sm:pt-24 overflow-hidden w-full bg-canvasWhite">
+          <BackgroundPaths />
 
-          <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none opacity-30">
-            <div className="w-full h-full">
-              <Tiles rows={20} cols={7} tileSize="md" />
-            </div>
-          </div>
-
-          <div className="relative z-50 max-w-7xl mx-auto w-full">
+          <div className="relative z-50 max-w-page mx-auto w-full">
             <div className="text-center mb-8 sm:mb-12 md:mb-16 px-2">
               {/* Announcement Pill */}
               <HeroPill
@@ -248,10 +239,10 @@ export default function Home() {
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.6, ease: easings.smooth }}
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight break-words w-full"
+                className="font-geist font-bold text-display leading-display text-midnightInk mb-4 sm:mb-6 break-words w-full"
               >
-                Turn Your GitHub <span className="font-serif italic font-semibold text-white">commits</span> Into<br />
-                <HeroWordReveal text="Social Stories That Matter" delay={0.7} />
+                Turn Your GitHub <span className="font-mono text-actionBlack">commits</span> Into<br />
+                <HeroWordReveal text="Social  Stories That  Matter" delay={0.7} />
               </motion.h1>
 
               {/* Subheading - fade up */}
@@ -259,9 +250,9 @@ export default function Home() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 1.0, duration: 0.6, ease: easings.smooth }}
-                className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 max-w-3xl mb-6 sm:mb-8 md:mb-10 text-center mx-auto px-2 break-words"
+                className="font-geist text-body-lg leading-body-lg text-gunmetalGray max-w-3xl mb-6 sm:mb-8 md:mb-10 text-center mx-auto px-2 break-words"
               >
-                Stop choosing between coding and building your brand. Every commit becomes content—automatically.
+                Stop choosing between coding and building your brand. Every commit becomes content - automatically.
               </motion.p>
 
               {/* CTA buttons - staggered */}
@@ -288,10 +279,12 @@ export default function Home() {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base flex items-center gap-2">
-                    Book a Demo
-                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 -rotate-45" />
-                  </Button>
+                  <Link href="/demo">
+                    <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
+                      Book a Demo
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 -rotate-45" />
+                    </Button>
+                  </Link>
                 </motion.div>
                 <motion.div
                   variants={{
@@ -303,7 +296,7 @@ export default function Home() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Link href="#powerful-features">
-                    <Button variant="hollow" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base flex items-center gap-2">
+                    <Button variant="hollow" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
                       View Services
                     </Button>
                   </Link>
@@ -314,10 +307,10 @@ export default function Home() {
         </section>
 
         {/* Integrations Section */}
-        <section className="relative z-10 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 overflow-hidden w-full" style={{ contentVisibility: 'auto' }}>
-          <div className="max-w-5xl mx-auto text-center w-full">
+        <section className="relative z-10 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-offWhiteSage">
+          <div className="max-w-page mx-auto text-center w-full">
             <FadeUp>
-              <p className="text-gray-400 text-base sm:text-lg md:text-xl font-medium mb-8 sm:mb-10 md:mb-12">Integrated with your favorite platforms</p>
+              <p className="font-geist text-body leading-body text-gunmetalGray mb-8 sm:mb-10 md:mb-12">Integrated with your favorite platforms</p>
             </FadeUp>
             <motion.div
               initial={{ opacity: 0 }}
@@ -342,22 +335,22 @@ export default function Home() {
                   gap={24}
                   fadeOut={true}
                   scaleOnHover={true}
-                  fadeOutColor="#000000"
+                  fadeOutColor="#f3efeb"
                   renderItem={(item) => (
-                    <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+                    <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 bg-canvasWhite rounded-buttons border border-softConcrete">
                       {item.useIconLogo ? (
                         <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full flex-shrink-0">
                           <img
                             src={item.iconSrc}
                             alt={item.title}
                             className="w-3 h-3 sm:w-4 sm:h-4"
-                            style={{ filter: item.iconSrc?.includes('twitter') || item.iconSrc?.includes('vercel') ? 'brightness(0) invert(1)' : 'none' }}
+                            style={{ filter: 'none' }}
                           />
                         </div>
                       ) : (
                         item.node
                       )}
-                      <span className="text-white text-xs sm:text-sm md:text-base font-normal truncate max-w-full">{item.title}</span>
+                      <span className="font-geist text-body leading-body text-midnightInk text-xs sm:text-sm md:text-base font-normal truncate max-w-full">{item.title}</span>
                     </div>
                   )}
                 />
@@ -376,19 +369,19 @@ export default function Home() {
         <ContentOutputTypes />
 
         {/* Watch DevSync AI in Action - Live Demo */}
-        <section id="watch-devsync-ai-in-action" className="relative z-10 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden w-full" style={{ contentVisibility: 'auto' }}>
-          <div className="max-w-5xl mx-auto w-full">
+        <section id="watch-devsync-ai-in-action" className="relative z-10 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-canvasWhite">
+          <div className="max-w-page mx-auto w-full">
             <div className="relative z-20 text-center mb-8 sm:mb-12 md:mb-16 px-2 sm:px-4">
-              <SectionHeading className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 font-heading break-words">
+              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-midnightInk mb-4 sm:mb-6 break-words">
                 Watch DevSync AI in Action
               </SectionHeading>
-              <SectionSubheading className="text-base sm:text-lg md:text-xl text-white max-w-2xl mx-auto break-words">
+              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-gunmetalGray max-w-2xl mx-auto break-words">
                 See how your commits are transformed into engaging social content—automatically.
               </SectionSubheading>
             </div>
 
             <FadeUp delay={0.2} className="flex justify-center w-full">
-              <div className="w-full max-w-4xl h-[450px] sm:h-[500px] md:h-[550px] border border-gray-800 rounded-2xl bg-black/20 p-4 sm:p-6 flex items-start justify-center overflow-hidden">
+              <div className="w-full max-w-4xl h-[450px] sm:h-[500px] md:h-[550px] border border-softConcrete rounded-cards bg-offWhiteSage p-4 sm:p-6 flex items-start justify-center overflow-hidden">
                 <DevSyncOverviewCard />
               </div>
             </FadeUp>
@@ -396,13 +389,13 @@ export default function Home() {
         </section>
 
         {/* Benefits/Results Section */}
-        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 bg-transparent overflow-hidden w-full" style={{ contentVisibility: 'auto' }}>
-          <div className="max-w-6xl mx-auto w-full">
+        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-offWhiteSage">
+          <div className="max-w-page mx-auto w-full">
             <div className="text-center mb-12 sm:mb-16 md:mb-20 px-2">
-              <SectionHeading className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 font-heading break-words">
+              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-midnightInk mb-4 sm:mb-6 break-words">
                 DevSync AI Results
               </SectionHeading>
-              <SectionSubheading className="text-base sm:text-lg md:text-xl text-white break-words">
+              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-gunmetalGray break-words">
                 Transform your development workflow into a content engine
               </SectionSubheading>
             </div>
@@ -433,19 +426,19 @@ export default function Home() {
                 <StaggerCard key={index}>
                   <motion.div
                     whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                    className="rounded-2xl p-8 border border-gray-700/50 bg-gradient-to-br from-draftrPurple/30 via-gray-900/50 to-gray-900/80 hover:border-draftrPurple/40 transition-all duration-300 flex flex-col h-full"
+                    className="rounded-cards p-8 border border-softConcrete bg-canvasWhite hover:border-actionBlack transition-colors duration-300 flex flex-col h-full"
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.12 + 0.3, type: "spring", stiffness: 200 }}
-                      className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-4 flex-shrink-0"
+                      className="w-10 h-10 bg-actionBlack rounded-full flex items-center justify-center mb-4 flex-shrink-0"
                     >
-                      <span className="text-draftrPurple">{benefit.icon}</span>
+                      <span className="text-canvasWhite">{benefit.icon}</span>
                     </motion.div>
-                    <h3 className="text-xl font-bold text-white mb-3 font-heading">{benefit.title}</h3>
-                    <p className="text-gray-400 leading-relaxed flex-1">{benefit.description}</p>
+                    <h3 className="font-geist font-bold text-heading-sm leading-heading-sm text-midnightInk mb-3">{benefit.title}</h3>
+                    <p className="font-geist text-body leading-body text-gunmetalGray leading-relaxed flex-1">{benefit.description}</p>
                   </motion.div>
                 </StaggerCard>
               ))}
@@ -454,13 +447,13 @@ export default function Home() {
         </section>
 
         {/* FAQ Section */}
-        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full" style={{ contentVisibility: 'auto' }}>
-          <div className="max-w-3xl mx-auto w-full">
+        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-canvasWhite">
+          <div className="max-w-page mx-auto w-full">
             <div className="text-center mb-12 sm:mb-16 px-2">
-              <SectionHeading className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading break-words">
+              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-midnightInk mb-4 break-words">
                 Got Questions?
               </SectionHeading>
-              <SectionSubheading className="text-base sm:text-lg md:text-xl text-white break-words">
+              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-gunmetalGray break-words">
                 Quick answers about DevSync AI
               </SectionSubheading>
             </div>
@@ -490,12 +483,12 @@ export default function Home() {
               ].map((faq, index) => (
                 <StaggerCard key={index}>
                   <motion.details
-                    className="group bg-[#111111] rounded-2xl border border-white/5 hover:border-draftrPurple/30 transition-all"
+                    className="group bg-offWhiteSage rounded-cards border border-softConcrete hover:border-actionBlack transition-colors"
                   >
                     <summary className="flex items-center justify-between p-4 sm:p-6 cursor-pointer">
-                      <h3 className="text-base sm:text-lg font-semibold text-white pr-2 sm:pr-4 font-heading break-words">{faq.q}</h3>
+                      <h3 className="font-geist font-medium text-body-lg leading-body-lg text-midnightInk pr-2 sm:pr-4 break-words">{faq.q}</h3>
                       <motion.svg
-                        className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 flex-shrink-0"
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-gunmetalGray flex-shrink-0"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -504,7 +497,7 @@ export default function Home() {
                       </motion.svg>
                     </summary>
                     <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-                      <p className="text-sm sm:text-base text-white leading-relaxed break-words">{faq.a}</p>
+                      <p className="font-geist text-body-lg leading-body-lg text-gunmetalGray leading-relaxed break-words">{faq.a}</p>
                     </div>
                   </motion.details>
                 </StaggerCard>
@@ -518,12 +511,12 @@ export default function Home() {
         </section>
 
         {/* Final CTA */}
-        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 bg-transparent overflow-hidden w-full" style={{ contentVisibility: 'auto' }}>
-          <div className="max-w-4xl mx-auto text-center w-full">
-            <SectionHeading className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 font-heading break-words">
+        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-offWhiteSage">
+          <div className="max-w-page mx-auto text-center w-full">
+            <SectionHeading className="font-geist font-bold text-heading leading-heading text-midnightInk mb-4 sm:mb-6 break-words">
               Your commits have stories.<br />Let's tell them.
             </SectionHeading>
-            <SectionSubheading delay={0.15} className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto break-words">
+            <SectionSubheading delay={0.15} className="font-geist text-body-lg leading-body-lg text-gunmetalGray mb-8 sm:mb-10 max-w-2xl mx-auto break-words">
               Join thousands of developers building their brand while they code. Start your free trial today.
             </SectionSubheading>
 
@@ -552,7 +545,7 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
               >
                 <Link href="/demo">
-                  <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base flex items-center gap-2">
+                  <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
                     Start Free Trial
                     <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
@@ -567,7 +560,7 @@ export default function Home() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button variant="ghost" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base flex items-center gap-2">
+                <Button variant="ghost" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
                   <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                   Connect GitHub
                 </Button>

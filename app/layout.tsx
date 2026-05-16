@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { inter, poppins, quattrocento, spaceGrotesk, manrope, playfairDisplay, plusJakartaSans, dmSans } from "./fonts";
+import { geist, geistMono } from "./fonts";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "DevSync AI - Turn GitHub Updates Into Social Media Posts",
@@ -10,16 +11,18 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         {/* Performance optimizations for Windows browsers */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
-      <body className={`${poppins.variable} ${inter.variable} ${quattrocento.variable} ${spaceGrotesk.variable} ${manrope.variable} ${playfairDisplay.variable} ${plusJakartaSans.variable} ${dmSans.variable} font-body antialiased`}>
-        {children}
+      <body className={`${geist.variable} ${geistMono.variable} font-geist antialiased bg-canvasWhite text-midnightInk`}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

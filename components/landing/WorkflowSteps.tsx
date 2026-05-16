@@ -88,7 +88,7 @@ export default function WorkflowSteps() {
   }, [totalHeight]);
 
   return (
-    <div className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 overflow-hidden w-full">
+    <div className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 overflow-hidden w-full bg-canvasWhite">
       <div className="max-w-7xl mx-auto w-full">
         <motion.div
           initial={{ y: 30, opacity: 0 }}
@@ -96,10 +96,10 @@ export default function WorkflowSteps() {
           viewport={{ once: true }}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading break-words">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-midnightInk mb-4 font-geist break-words">
             Simplify Your Workflow
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto break-words">
+          <p className="text-base sm:text-lg md:text-xl text-gunmetalGray max-w-2xl mx-auto break-words">
             Turn your GitHub activity into social content in three simple steps
           </p>
         </motion.div>
@@ -109,25 +109,25 @@ export default function WorkflowSteps() {
           {steps.map((step, index) => (
             <div
               key={step.number}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 overflow-hidden h-full"
+              className="bg-offWhiteSage border border-fadedStone rounded-cards p-5 overflow-hidden h-full"
             >
               <div className="relative z-10">
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-draftrPurple to-[#8771ff] flex items-center justify-center text-white mb-4">
+                <div className="w-12 h-12 rounded-cards bg-actionBlack flex items-center justify-center text-canvasWhite mb-4">
                   {step.icon}
                 </div>
 
                 {/* Content */}
-                <h3 className="text-lg font-bold text-white mb-2 font-heading">{step.title}</h3>
-                <p className="text-gray-400 text-sm mb-3">{step.subtitle}</p>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4">
+                <h3 className="text-lg font-bold text-midnightInk mb-2 font-geist">{step.title}</h3>
+                <p className="text-gunmetalGray text-sm mb-3">{step.subtitle}</p>
+                <p className="text-gunmetalGray text-sm leading-relaxed mb-4">
                   {step.description}
                 </p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2">
                   {step.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs">
+                    <span key={tag} className="px-3 py-1 rounded-full bg-canvasWhite border border-softConcrete text-gunmetalGray text-xs font-geist">
                       {tag}
                     </span>
                   ))}
@@ -141,13 +141,13 @@ export default function WorkflowSteps() {
         <div className="relative hidden md:block">
           <div
             ref={scrollContainerRef}
-            className="max-h-[500px] sm:max-h-[600px] overflow-y-auto scrollbar-hide border border-white/10 rounded-2xl w-full"
+            className="max-h-[500px] sm:max-h-[600px] overflow-y-auto scrollbar-hide border border-fadedStone rounded-cards w-full bg-offWhiteSage"
           >
             {/* Timeline line */}
             <div ref={timelineRef} className="relative px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28 pb-20 sm:pb-24 md:pb-28 w-full">
               {/* Animated progress line */}
               <div
-                className="absolute left-8 md:left-1/2 top-2 w-[2px] bg-gradient-to-b from-draftrPurple to-[#8771ff] will-change-height"
+                className="absolute left-8 md:left-1/2 top-2 w-[2px] bg-actionBlack will-change-height"
                 style={{ height: `${lineHeight}px`, transition: 'height 0.05s linear' }}
               />
 
@@ -169,38 +169,38 @@ export default function WorkflowSteps() {
                     whileInView={{ opacity: activeStep === index ? 0.15 : 0.03, scale: activeStep === index ? 1.05 : 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.15 + 0.1, duration: 0.3 }}
-                    className={`hidden md:block absolute top-1/2 -translate-y-1/2 text-[50px] sm:text-[70px] md:text-[80px] lg:text-[90px] font-bold leading-none select-none font-heading pointer-events-none ${
+                    className={`hidden md:block absolute top-1/2 -translate-y-1/2 text-[50px] sm:text-[70px] md:text-[80px] lg:text-[90px] font-bold leading-none select-none font-geist pointer-events-none ${
                       index % 2 === 0 ? 'right-1/2 translate-x-16' : 'left-1/2 -translate-x-16'
-                    } ${activeStep === index ? 'text-draftrPurple' : 'text-white'}`}
+                    } ${activeStep === index ? 'text-actionBlack' : 'text-gunmetalGray'}`}
                   >
                     {step.number}
                   </motion.div>
 
                   {/* Dot */}
                   <div className={`absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 z-10 transition-all duration-300 ${
-                    activeStep === index ? 'bg-draftrPurple border-white scale-125' : 'bg-white border-draftrPurple'
+                    activeStep === index ? 'bg-actionBlack border-canvasWhite scale-125' : 'bg-canvasWhite border-actionBlack'
                   }`} />
 
                   {/* Card */}
                   <div className={`w-full md:w-[38%] pl-12 md:pl-0 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'} ml-16 md:ml-0`}>
-                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 transition duration-300 overflow-hidden h-full min-h-[220px] sm:min-h-[240px] md:min-h-[260px]">
+                    <div className="bg-canvasWhite border border-fadedStone rounded-cards p-4 sm:p-6 hover:shadow-sm transition duration-300 overflow-hidden h-full min-h-[220px] sm:min-h-[240px] md:min-h-[260px]">
                       <div className="relative z-10">
                         {/* Icon */}
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-draftrPurple to-[#8771ff] flex items-center justify-center text-white mb-4 sm:mb-6">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-cards bg-actionBlack flex items-center justify-center text-canvasWhite mb-4 sm:mb-6">
                           {step.icon}
                         </div>
 
                         {/* Content */}
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2 font-heading break-words">{step.title}</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm mb-4">{step.subtitle}</p>
-                        <p className="text-gray-500 text-sm leading-relaxed mb-4 sm:mb-6 break-words">
+                        <h3 className="text-lg sm:text-xl font-bold text-midnightInk mb-2 font-geist break-words">{step.title}</h3>
+                        <p className="text-gunmetalGray text-xs sm:text-sm mb-4">{step.subtitle}</p>
+                        <p className="text-gunmetalGray text-sm leading-relaxed mb-4 sm:mb-6 break-words">
                           {step.description}
                         </p>
 
                         {/* Tags */}
                         <div className="flex flex-wrap gap-2">
                           {step.tags.map((tag) => (
-                            <span key={tag} className="px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs">
+                            <span key={tag} className="px-2 sm:px-3 py-1 rounded-full bg-offWhiteSage border border-softConcrete text-gunmetalGray text-xs font-geist">
                               {tag}
                             </span>
                           ))}

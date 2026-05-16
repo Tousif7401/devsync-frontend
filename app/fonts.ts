@@ -1,53 +1,19 @@
-import { Inter, Poppins, Quattrocento, Space_Grotesk, Manrope, Playfair_Display, Plus_Jakarta_Sans, DM_Sans } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 
-// Satoshi and Switzer are loaded via @font-face in globals.css
+// Titan Design System Fonts
+// Geist is substituted with Inter
+// Geist Mono is substituted with JetBrains Mono
 
-export const inter = Inter({
+export const geist = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-geist',
   display: 'swap',
+  weight: ['400', '500', '700'],
 })
 
-export const plusJakartaSans = Plus_Jakarta_Sans({
+export const geistMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
+  variable: '--font-geist-mono',
   display: 'swap',
-})
-
-export const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-dm-sans',
-  display: 'swap',
-})
-
-export const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-poppins',
-  display: 'swap',
-})
-
-export const quattrocento = Quattrocento({
-  subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-quattrocento',
-  display: 'swap',
-})
-
-export const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-})
-
-export const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap',
-})
-
-export const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
+  weight: ['400', '500'],
 })

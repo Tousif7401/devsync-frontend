@@ -8,76 +8,76 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnalyticsDemo, AutomationDemo, PrivacyDemo, MultiPlatformDemo, HistoryDemo, GitHubDemo } from '@/components/landing/FeatureShowcase';
 
-// Duotone Palette: White (#FFFFFF) + Acid Green (#CCFF00)
+// Titan Palette: Midnight Ink (#111111) + Canvas White (#ffffff) + Highlight Orange (#ff9900)
 const AnalyticsIcon = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="24" cy="24" r="20" fill="white" opacity="0.08"/>
-    <path d="M12 32 L18 24 L24 28 L30 18 L36 22" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="18" cy="24" r="2.5" fill="white" opacity="0.6"/>
-    <circle cx="24" cy="28" r="2.5" fill="white" opacity="0.7"/>
-    <circle cx="30" cy="18" r="2.5" fill="white" opacity="0.6"/>
-    <circle cx="36" cy="22" r="2.5" fill="#CCFF00"/>
-    <rect x="10" y="34" width="28" height="2" rx="1" fill="white" opacity="0.2"/>
+    <circle cx="24" cy="24" r="20" fill="#111111" opacity="0.08"/>
+    <path d="M12 32 L18 24 L24 28 L30 18 L36 22" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="18" cy="24" r="2.5" fill="#111111" opacity="0.6"/>
+    <circle cx="24" cy="28" r="2.5" fill="#111111" opacity="0.7"/>
+    <circle cx="30" cy="18" r="2.5" fill="#111111" opacity="0.6"/>
+    <circle cx="36" cy="22" r="2.5" fill="#ff9900"/>
+    <rect x="10" y="34" width="28" height="2" rx="1" fill="#111111" opacity="0.2"/>
   </svg>
 );
 
 const AutomationIcon = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="24" cy="24" r="20" fill="white" opacity="0.08"/>
-    <path d="M20 12 L28 20 L20 20 L20 12Z" fill="white" opacity="0.6"/>
-    <path d="M28 28 L20 36 L28 36 L28 28Z" fill="white" opacity="0.6"/>
-    <circle cx="24" cy="24" r="4" stroke="#CCFF00" strokeWidth="2.5" fill="none"/>
-    <circle cx="24" cy="24" r="1.5" fill="#CCFF00"/>
-    <path d="M32 24 L40 24 M36 20 L40 24 L36 28" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
-    <path d="M8 24 L16 24 M12 20 L8 24 L12 28" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
+    <circle cx="24" cy="24" r="20" fill="#111111" opacity="0.08"/>
+    <path d="M20 12 L28 20 L20 20 L20 12Z" fill="#111111" opacity="0.6"/>
+    <path d="M28 28 L20 36 L28 36 L28 28Z" fill="#111111" opacity="0.6"/>
+    <circle cx="24" cy="24" r="4" stroke="#ff9900" strokeWidth="2.5" fill="none"/>
+    <circle cx="24" cy="24" r="1.5" fill="#ff9900"/>
+    <path d="M32 24 L40 24 M36 20 L40 24 L36 28" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
+    <path d="M8 24 L16 24 M12 20 L8 24 L12 28" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
   </svg>
 );
 
 const PrivacyIcon = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="24" cy="24" r="20" fill="white" opacity="0.08"/>
-    <rect x="14" y="14" width="20" height="20" rx="4" stroke="white" strokeWidth="2" fill="none"/>
-    <path d="M18 18 L30 18 L30 22 L18 22 Z" fill="white" opacity="0.2"/>
-    <path d="M18 26 L30 26 L30 30 L18 30 Z" fill="white" opacity="0.3"/>
-    <circle cx="28" cy="16" r="2.5" fill="#CCFF00"/>
+    <circle cx="24" cy="24" r="20" fill="#111111" opacity="0.08"/>
+    <rect x="14" y="14" width="20" height="20" rx="4" stroke="#111111" strokeWidth="2" fill="none"/>
+    <path d="M18 18 L30 18 L30 22 L18 22 Z" fill="#111111" opacity="0.2"/>
+    <path d="M18 26 L30 26 L30 30 L18 30 Z" fill="#111111" opacity="0.3"/>
+    <circle cx="28" cy="16" r="2.5" fill="#ff9900"/>
   </svg>
 );
 
 const MultiPlatformIcon = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="24" cy="24" r="20" fill="white" opacity="0.08"/>
-    <circle cx="24" cy="24" r="6" fill="#CCFF00"/>
-    <circle cx="36" cy="16" r="3.5" fill="white" opacity="0.5"/>
-    <circle cx="12" cy="32" r="3.5" fill="white" opacity="0.5"/>
-    <circle cx="36" cy="32" r="3.5" fill="white" opacity="0.5"/>
-    <circle cx="12" cy="16" r="3.5" fill="white" opacity="0.5"/>
-    <path d="M24 18 L30 14" stroke="white" strokeWidth="1.5" opacity="0.3"/>
-    <path d="M24 30 L18 34" stroke="white" strokeWidth="1.5" opacity="0.3"/>
-    <path d="M30 18 L34 16" stroke="white" strokeWidth="1.5" opacity="0.3"/>
-    <path d="M18 30 L14 32" stroke="white" strokeWidth="1.5" opacity="0.3"/>
+    <circle cx="24" cy="24" r="20" fill="#111111" opacity="0.08"/>
+    <circle cx="24" cy="24" r="6" fill="#ff9900"/>
+    <circle cx="36" cy="16" r="3.5" fill="#111111" opacity="0.5"/>
+    <circle cx="12" cy="32" r="3.5" fill="#111111" opacity="0.5"/>
+    <circle cx="36" cy="32" r="3.5" fill="#111111" opacity="0.5"/>
+    <circle cx="12" cy="16" r="3.5" fill="#111111" opacity="0.5"/>
+    <path d="M24 18 L30 14" stroke="#111111" strokeWidth="1.5" opacity="0.3"/>
+    <path d="M24 30 L18 34" stroke="#111111" strokeWidth="1.5" opacity="0.3"/>
+    <path d="M30 18 L34 16" stroke="#111111" strokeWidth="1.5" opacity="0.3"/>
+    <path d="M18 30 L14 32" stroke="#111111" strokeWidth="1.5" opacity="0.3"/>
   </svg>
 );
 
 const HistoryIcon = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="24" cy="24" r="20" fill="white" opacity="0.08"/>
-    <path d="M24 12 L24 24 L34 24" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-    <circle cx="24" cy="24" r="3" fill="#CCFF00"/>
-    <circle cx="24" cy="24" r="8" stroke="white" strokeWidth="1.5" fill="none" opacity="0.4"/>
-    <circle cx="24" cy="24" r="12" stroke="white" strokeWidth="1.5" fill="none" opacity="0.25"/>
-    <circle cx="24" cy="24" r="16" stroke="white" strokeWidth="1.5" fill="none" opacity="0.15"/>
+    <circle cx="24" cy="24" r="20" fill="#111111" opacity="0.08"/>
+    <path d="M24 12 L24 24 L34 24" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    <circle cx="24" cy="24" r="3" fill="#ff9900"/>
+    <circle cx="24" cy="24" r="8" stroke="#111111" strokeWidth="1.5" fill="none" opacity="0.4"/>
+    <circle cx="24" cy="24" r="12" stroke="#111111" strokeWidth="1.5" fill="none" opacity="0.25"/>
+    <circle cx="24" cy="24" r="16" stroke="#111111" strokeWidth="1.5" fill="none" opacity="0.15"/>
   </svg>
 );
 
 const GitHubIcon = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="24" cy="24" r="20" fill="white" opacity="0.08"/>
-    <circle cx="24" cy="24" r="3.5" fill="#CCFF00"/>
-    <circle cx="16" cy="16" r="2" fill="white" opacity="0.5"/>
-    <circle cx="32" cy="16" r="2" fill="white" opacity="0.5"/>
-    <circle cx="16" cy="32" r="2" fill="white" opacity="0.5"/>
-    <circle cx="32" cy="32" r="2" fill="white" opacity="0.5"/>
-    <path d="M20 20 L28 28 M28 20 L20 28" stroke="white" strokeWidth="2" strokeLinecap="round" opacity="0.3"/>
+    <circle cx="24" cy="24" r="20" fill="#111111" opacity="0.08"/>
+    <circle cx="24" cy="24" r="3.5" fill="#ff9900"/>
+    <circle cx="16" cy="16" r="2" fill="#111111" opacity="0.5"/>
+    <circle cx="32" cy="16" r="2" fill="#111111" opacity="0.5"/>
+    <circle cx="16" cy="32" r="2" fill="#111111" opacity="0.5"/>
+    <circle cx="32" cy="32" r="2" fill="#111111" opacity="0.5"/>
+    <path d="M20 20 L28 28 M28 20 L20 28" stroke="#111111" strokeWidth="2" strokeLinecap="round" opacity="0.3"/>
   </svg>
 );
 
@@ -87,7 +87,7 @@ const features = [
     icon: AnalyticsIcon,
     title: 'Real-time Analytics',
     description: 'Track engagement, reach, and growth across all platforms with detailed insights.',
-    color: 'from-[#CCFF00] to-[#B3E600]',
+    color: 'from-[#ff9900] to-[#e68a00]',
     stat: '4.2% Engagement',
     detailTitle: 'Data-Driven Insights',
     demo: AnalyticsDemo,
@@ -103,7 +103,7 @@ const features = [
     icon: AutomationIcon,
     title: 'Instant Generation',
     description: 'AI-powered content creation in seconds after every commit.',
-    color: 'from-white to-gray-200',
+    color: 'from-actionBlack to-midnightInk',
     stat: '< 3s Generation',
     detailTitle: 'Zero-Wait Workflow',
     demo: AutomationDemo,
@@ -119,7 +119,7 @@ const features = [
     icon: PrivacyIcon,
     title: 'Privacy First',
     description: 'Your code stays private. We only read commit metadata.',
-    color: 'from-[#CCFF00]/90 to-[#B3E600]/80',
+    color: 'from-[#ff9900]/90 to-[#e68a00]/80',
     stat: 'Zero Code Access',
     detailTitle: 'Enterprise Security',
     demo: PrivacyDemo,
@@ -135,7 +135,7 @@ const features = [
     icon: MultiPlatformIcon,
     title: 'Multi-Platform',
     description: 'Post to LinkedIn, X, and Instagram simultaneously.',
-    color: 'from-gray-100 to-gray-300',
+    color: 'from-fadedStone to-softConcrete',
     stat: '3+ Platforms',
     detailTitle: 'Everywhere at Once',
     demo: MultiPlatformDemo,
@@ -151,7 +151,7 @@ const features = [
     icon: HistoryIcon,
     title: 'Smart History',
     description: 'Reuse and refine your best-performing content effortlessly.',
-    color: 'from-white to-[#CCFF00]/60',
+    color: 'from-canvasWhite to-[#ff9900]/60',
     stat: 'Unlimited Archive',
     detailTitle: 'Content Library',
     demo: HistoryDemo,
@@ -167,7 +167,7 @@ const features = [
     icon: GitHubIcon,
     title: 'GitHub Native',
     description: 'Seamless integration with your existing development workflow.',
-    color: 'from-[#CCFF00] to-gray-400',
+    color: 'from-[#ff9900] to-gunmetalGray',
     stat: '< 2min Setup',
     detailTitle: 'Developer-First Design',
     demo: GitHubDemo,
@@ -184,7 +184,7 @@ export default function FeatureCards() {
   const [selectedFeature, setSelectedFeature] = useState<typeof features[0] | null>(null);
 
   return (
-    <section id="powerful-features" className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 overflow-hidden w-full">
+    <section id="powerful-features" className="relative z-10 py-20 sm:py-24 px-4 sm:px-6 overflow-hidden w-full bg-canvasWhite">
       <div className="max-w-7xl mx-auto w-full">
         <motion.div
           initial={{ y: 30, opacity: 0 }}
@@ -192,10 +192,10 @@ export default function FeatureCards() {
           viewport={{ once: false }}
           className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 font-heading break-words">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-actionBlack mb-4 font-geist break-words">
             Powerful Features
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto break-words">
+          <p className="text-base sm:text-lg md:text-xl text-gunmetalGray max-w-2xl mx-auto break-words">
             Everything you need to turn your GitHub activity into a thriving personal brand
           </p>
         </motion.div>
@@ -210,26 +210,26 @@ export default function FeatureCards() {
             className="space-y-4 sm:space-y-6"
           >
             <div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 font-heading break-words">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-midnightInk mb-4 sm:mb-6 font-geist break-words">
                 Everything You Need to Grow Your Brand
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed break-words">
+              <p className="text-base sm:text-lg md:text-xl text-gunmetalGray leading-relaxed break-words">
                 Six powerful features designed to transform your GitHub activity into compelling content that resonates with your audience.
               </p>
             </div>
 
             <div className="space-y-4">
-              <p className="text-gray-400 leading-relaxed break-words">
+              <p className="text-gunmetalGray leading-relaxed break-words">
                 From real-time analytics that track your engagement to instant AI-powered content generation, DevSync AI handles it all. Your code stays private while your brand grows.
               </p>
-              <p className="text-gray-400 leading-relaxed break-words">
+              <p className="text-gunmetalGray leading-relaxed break-words">
                 Connect once, post everywhere. LinkedIn, X, and Instagram—all synchronized automatically with platform-optimized content.
               </p>
             </div>
 
             <div className="pt-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#5235ef]/10 border border-[#5235ef]/30">
-                <span className="text-[#5235ef] text-sm font-medium">Click cards for details</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-offWhiteSage border border-softConcrete">
+                <span className="text-midnightInk text-sm font-medium font-geist">Click cards for details</span>
               </div>
             </div>
           </motion.div>
@@ -258,20 +258,20 @@ export default function FeatureCards() {
                     return (
                       <Card key={feature.id} customClass="p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:scale-105 transition-transform group relative" onClick={() => setSelectedFeature(feature)}>
                         <div>
-                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#1a1a1a] border border-white/10 flex items-center justify-center mb-2 sm:mb-3 p-2 sm:p-3 hover:border-[#8B5CF6]/30 transition-colors">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-fadedStone bg-canvasWhite flex items-center justify-center mb-2 sm:mb-3 p-2 sm:p-3 hover:bg-offWhiteSage hover:border-softConcrete transition-colors">
                             <IconComponent />
                           </div>
-                          <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 sm:mb-2 font-heading">{feature.title}</h3>
-                          <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed">{feature.description}</p>
+                          <h3 className="text-base sm:text-lg font-bold text-midnightInk mb-1.5 sm:mb-2 font-geist">{feature.title}</h3>
+                          <p className="text-gunmetalGray text-[10px] sm:text-xs leading-relaxed">{feature.description}</p>
                         </div>
-                        <div className="text-[10px] sm:text-xs font-semibold text-white">
+                        <div className="text-[10px] sm:text-xs font-semibold text-midnightInk">
                           {feature.stat}
                         </div>
                         {/* Tooltip */}
                         <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                          <div className="bg-white text-black text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
+                          <div className="bg-actionBlack text-canvasWhite text-xs font-semibold px-3 py-1.5 rounded-buttons whitespace-nowrap shadow-sm">
                             Click me!
-                            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2 h-2 bg-white rotate-45"></div>
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2 h-2 bg-actionBlack rotate-45"></div>
                           </div>
                         </div>
                       </Card>
@@ -293,7 +293,7 @@ export default function FeatureCards() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-midnightInk/70 backdrop-blur-sm"
               onClick={() => setSelectedFeature(null)}
             >
               <motion.div
@@ -322,32 +322,32 @@ export default function FeatureCards() {
                   rotateX: { type: "spring", damping: 20, stiffness: 300 }
                 }}
                 style={{ transformStyle: "preserve-3d", scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                className="bg-[#111111] border border-white/10 rounded-3xl p-8 max-w-2xl w-full relative max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden"
+                className="bg-canvasWhite border border-softConcrete rounded-cards p-8 max-w-2xl w-full relative max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedFeature(null)}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors z-10"
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-offWhiteSage hover:bg-fadedStone flex items-center justify-center text-gunmetalGray hover:text-midnightInk transition-colors z-10"
                 >
                   <X className="w-5 h-5" />
                 </button>
 
                 {/* Icon & Title */}
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-20 h-20 rounded-2xl bg-[#1a1a1a] border border-white/10 flex items-center justify-center flex-shrink-0 p-4">
+                  <div className="w-20 h-20 rounded-cards bg-offWhiteSage border border-fadedStone flex items-center justify-center flex-shrink-0 p-4">
                     <selectedFeature.icon />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-white mb-2 font-heading">{selectedFeature.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{selectedFeature.description}</p>
+                    <h3 className="text-2xl font-bold text-midnightInk mb-2 font-geist">{selectedFeature.title}</h3>
+                    <p className="text-gunmetalGray text-sm leading-relaxed">{selectedFeature.description}</p>
                   </div>
                 </div>
 
                 {/* Detail Title */}
                 <div className="mb-4">
-                  <h4 className="text-lg font-semibold text-white mb-2">{selectedFeature.detailTitle}</h4>
-                  <p className="text-gray-300 leading-relaxed">{selectedFeature.detailContent}</p>
+                  <h4 className="text-lg font-semibold text-midnightInk mb-2 font-geist">{selectedFeature.detailTitle}</h4>
+                  <p className="text-gunmetalGray leading-relaxed">{selectedFeature.detailContent}</p>
                 </div>
 
                 {/* Demo Animation */}
@@ -356,13 +356,13 @@ export default function FeatureCards() {
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-fadedStone">
                   {selectedFeature.stats.map((stat) => (
                     <div key={stat.label} className="text-center">
-                      <div className="text-2xl font-bold text-white mb-1">
+                      <div className="text-2xl font-bold text-midnightInk mb-1 font-geist">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-gray-500">{stat.label}</div>
+                      <div className="text-xs text-gunmetalGray font-geist">{stat.label}</div>
                     </div>
                   ))}
                 </div>

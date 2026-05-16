@@ -15,28 +15,28 @@ const Safari_01: React.FC<Safari_01Props> = ({ children, className, contentPaddi
   return (
     <div
       className={cn(
-        "rounded-xl border border-white/10 bg-[#0a0a0a] shadow-2xl overflow-hidden min-w-full sm:min-w-[500px] md:min-w-[600px] lg:" + minWidth,
+        "rounded-cards border border-black bg-canvasWhite overflow-hidden min-w-full sm:min-w-[500px] md:min-w-[600px] lg:" + minWidth,
         className
       )}
     >
       {/* Browser top bar */}
-      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 bg-[#141414] border-b border-white/10">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 bg-offWhiteSage border-b border-fadedStone">
         <div className="flex items-center space-x-2">
-          <span className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full" />
-          <span className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full" />
-          <span className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full" />
+          <span className="w-2 h-2 sm:w-3 sm:h-3 bg-red-400 rounded-full" />
+          <span className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-400 rounded-full" />
+          <span className="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full" />
         </div>
-        <div className="flex-1 mx-2 sm:mx-4 bg-white/5 rounded-full h-5 sm:h-7 max-w-[150px] sm:max-w-md flex items-center px-2 sm:px-3">
-          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 mr-1.5 sm:mr-2" />
-          <span className="text-[10px] sm:text-xs text-gray-500">devsync.ai</span>
+        <div className="flex-1 mx-2 sm:mx-4 bg-canvasWhite rounded-navigation h-5 sm:h-7 max-w-[150px] sm:max-w-md flex items-center px-2 sm:px-3 border border-fadedStone">
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 mr-1.5 sm:mr-2" />
+          <span className="text-[10px] sm:text-xs text-gunmetalGray font-geist">devsync.ai</span>
         </div>
-        <div className="w-3 h-3 sm:w-4 sm:h-4" /> {/* Placeholder for right side icons */}
+        <div className="w-3 h-3 sm:w-4 sm:h-4" />
       </div>
 
       {/* Content area */}
-      <div className={`bg-[#0a0a0a] px-4 sm:px-6 md:px-8 overflow-hidden min-h-[300px] sm:min-h-[400px] md:${minHeight} ${contentPadding} sm:${contentPadding}`}>
+      <div className={`bg-canvasWhite px-4 sm:px-6 md:px-8 overflow-hidden min-h-[300px] sm:min-h-[400px] md:${minHeight} ${contentPadding} sm:${contentPadding}`}>
         {children || (
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gunmetalGray">
             No content
           </div>
         )}
