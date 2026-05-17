@@ -239,7 +239,7 @@ export default function Home() {
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.6, ease: easings.smooth }}
-                className="font-geist font-bold text-display leading-display text-midnightInk mb-4 sm:mb-6 break-words w-full"
+                className="font-geist font-bold text-3xl sm:text-4xl md:text-5xl lg:text-display leading-tight sm:leading-display text-midnightInk mb-4 sm:mb-6 break-words w-full"
               >
                 Turn Your GitHub <span className="font-mono text-actionBlack">commits</span> Into<br />
                 <HeroWordReveal text="Social  Stories That  Matter" delay={0.7} />
