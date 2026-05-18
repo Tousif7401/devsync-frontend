@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, RefreshCw, Save, Search, Clock, GitCommit, ExternalLink, CheckCircle2, XCircle, Edit2, Share2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, RefreshCw, Save, Search, Clock, GitCommit, ExternalLink, CheckCircle2, XCircle, Edit2, Share2, Zap, FileText, TrendingUp, ChevronRight } from 'lucide-react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import EditModal from '@/components/dashboard/EditModal';
 import { Button } from '@/components/ui/neon-button';
 
 const easings = {
   smooth: [0.16, 1, 0.3, 1],
+  snappy: [0.25, 0.46, 0.45, 0.94],
 };
 
 interface GeneratedContent {
@@ -41,20 +42,29 @@ interface GitHubCommit {
   url: string;
 }
 
+interface PlatformCard {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+  color: string;
+  gradient: string;
+  content: string;
+}
+
 export default function DashboardPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Generate state
   const [inputPrompt, setInputPrompt] = useState('');
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // GitHub commits state
   const [githubCommits, setGithubCommits] = useState<GitHubCommit[]>([]);
   const [selectedCommit, setSelectedCommit] = useState<GitHubCommit | null>(null);
+
+  const [hoveredPlatform, setHoveredPlatform] = useState<string | null>(null);
 
   const handleEdit = (post: Post) => {
     setEditingPost(post);
@@ -171,7 +181,6 @@ export default function DashboardPage() {
       post.authorName.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
-  // Fetch posts on mount
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -187,7 +196,6 @@ export default function DashboardPage() {
 
     fetchPosts();
 
-    // Mock GitHub commits - replace with actual GitHub API call
     const mockCommits: GitHubCommit[] = [
       {
         sha: 'abc123',
@@ -223,107 +231,122 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-6 md:p-8 h-full">
+      <div className="min-h-screen p-6 md:p-8 overflow-hidden">
+        {/* Hero Section */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: easings.smooth }}
+          className="mb-8"
+        >
+          <div className="relative">
+            <h1 className="font-geist font-bold text-5xl md:text-6xl lg:text-7xl tracking-tight text-white mb-4">
+              Turn commits into
+              <span className="block bg-gradient-to-r from-[#00d2ff] via-[#A4F4FD] to-[#00d2ff] bg-clip-text text-transparent animate-shiny">
+                Social Stories
+              </span>
+            </h1>
+            <p className="font-geist text-white/60 text-lg max-w-2xl">
+              Transform your GitHub commits into engaging content across LinkedIn, X, and Instagram — automatically.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Quick Stats Bar */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: easings.smooth }}
-          className="mb-6"
+          transition={{ delay: 0.1, duration: 0.5, ease: easings.smooth }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
         >
-          <h1
-            className="text-3xl font-bold text-white mb-2"
-            style={{ fontFamily: 'Manrope, sans-serif' }}
-          >
-            Generate Content
-          </h1>
-          <p
-            className="text-gray-400"
-            style={{ fontFamily: 'Manrope, sans-serif' }}
-          >
-            Select a commit from your repository or enter custom text to generate social media content
-          </p>
+          {[
+            { label: 'Total Posts', value: posts.length, icon: FileText, color: 'from-blue-500 to-cyan-500' },
+            { label: 'Published', value: posts.filter(p => p.isPublished).length, icon: CheckCircle2, color: 'from-green-500 to-emerald-500' },
+            { label: 'Drafts', value: posts.filter(p => !p.isPublished).length, icon: XCircle, color: 'from-yellow-500 to-orange-500' },
+            { label: 'This Week', value: '12', icon: TrendingUp, color: 'from-purple-500 to-pink-500' },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15 + i * 0.05, duration: 0.4, ease: easings.smooth }}
+              whileHover={{ y: -4 }}
+              className="liquid-glass rounded-cards p-5 relative overflow-hidden"
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5`} />
+              <div className="relative z-10">
+                <stat.icon className={`w-5 h-5 mb-3 text-transparent bg-gradient-to-br ${stat.color} bg-clip-text`} />
+                <p className="text-3xl font-bold text-white font-geist mb-1">{stat.value}</p>
+                <p className="text-white/40 text-sm font-geist">{stat.label}</p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
-        {/* Three Column Layout */}
+        {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column - Generated Posts History */}
+          {/* Left Column - Generated Posts */}
           <motion.div
-            initial={{ x: -20, opacity: 0 }}
+            initial={{ x: -30, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.5, ease: easings.smooth }}
+            transition={{ delay: 0.2, duration: 0.5, ease: easings.smooth }}
             className="lg:col-span-3 space-y-4"
           >
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-4">
-              <h2
-                className="text-lg font-semibold text-white mb-4 flex items-center gap-2"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
-              >
-                <Clock className="w-5 h-5 text-[#8B5CF6]" />
-                Generated Posts ({posts.length})
-              </h2>
+            <div className="liquid-glass rounded-cards p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-white font-geist flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-[#00d2ff]" />
+                  Your Posts
+                </h2>
+                <span className="text-xs bg-white/10 text-white/60 px-2 py-1 rounded-full font-geist">
+                  {posts.length}
+                </span>
+              </div>
 
               {/* Search */}
-              <div className="relative mb-4">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <div className="relative mb-6">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search posts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg pl-10 pr-3 py-2 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#8B5CF6] transition-colors"
-                  style={{ fontFamily: 'Manrope, sans-serif' }}
+                  className="w-full bg-white/5 border border-white/10 rounded-cards pl-11 pr-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#00d2ff] transition-colors font-geist"
                 />
               </div>
 
               {/* Posts List */}
-              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+              <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                 {filteredPosts.length === 0 ? (
-                  <div className="text-center py-8">
-                    <p className="text-gray-500 text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      No posts yet
-                    </p>
+                  <div className="text-center py-12">
+                    <FileText className="w-12 h-12 text-white/10 mx-auto mb-3" />
+                    <p className="text-white/40 text-sm font-geist">No posts yet</p>
+                    <p className="text-white/20 text-xs font-geist mt-1">Generate your first post</p>
                   </div>
                 ) : (
                   filteredPosts.map((post) => (
                     <motion.div
                       key={post.id}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="bg-[#0a0a0a] border border-white/5 rounded-xl p-4 hover:border-white/10 transition-all cursor-pointer"
+                      initial={{ x: -10, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      whileHover={{ x: 4 }}
+                      className="bg-white/5 border border-white/5 rounded-cards p-4 hover:border-[#00d2ff]/30 transition-all cursor-pointer group"
                     >
-                      <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-start gap-3">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0
+                          ${post.isPublished
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-yellow-500/20 text-yellow-400'
+                          }
+                        `}>
+                          {post.isPublished ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                        </div>
                         <div className="flex-1 min-w-0">
-                          <p
-                            className="text-sm font-medium text-white mb-1 truncate"
-                            style={{ fontFamily: 'Manrope, sans-serif' }}
-                          >
+                          <p className="text-sm font-medium text-white mb-1 truncate font-geist">
                             {post.commitMessage}
                           </p>
-                          <p className="text-xs text-gray-500" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                            {post.authorName}
-                          </p>
+                          <p className="text-xs text-white/40 font-geist">{post.authorName}</p>
                         </div>
-                        <span className={`ml-2 shrink-0 ${post.isPublished ? 'text-green-400' : 'text-yellow-400'}`}>
-                          {post.isPublished ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                        </span>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleEdit(post); }}
-                          className="flex-1 bg-white/5 hover:bg-white/10 text-gray-300 text-xs py-1.5 rounded-lg transition-all flex items-center justify-center gap-1"
-                        >
-                          <Edit2 className="w-3 h-3" />
-                          Edit
-                        </button>
-                        {!post.isPublished && (
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handlePublish(post.id, ['linkedin', 'twitter', 'instagram']); }}
-                            className="flex-1 bg-[#8B5CF6]/20 hover:bg-[#8B5CF6]/30 text-[#8B5CF6] text-xs py-1.5 rounded-lg transition-all flex items-center justify-center gap-1"
-                          >
-                            <Share2 className="w-3 h-3" />
-                            Publish
-                          </button>
-                        )}
                       </div>
                     </motion.div>
                   ))
@@ -332,264 +355,259 @@ export default function DashboardPage() {
             </div>
           </motion.div>
 
-          {/* Middle Column - AI Input Section */}
+          {/* Middle Column - Input & Preview */}
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
+            initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5, ease: easings.smooth }}
-            className="lg:col-span-6 space-y-4"
-          >
-            {/* AI Input Form */}
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-6">
-              {selectedCommit && (
-                <div className="mb-4 flex items-center justify-between bg-[#8B5CF6]/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2">
-                    <GitCommit className="w-4 h-4 text-[#8B5CF6]" />
-                    <span className="text-sm text-[#8B5CF6]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      Selected: {selectedCommit.message}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => setSelectedCommit(null)}
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    <XCircle className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
-
-              <label className="block text-sm font-medium text-gray-300 mb-3" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                Enter commit message or text
-              </label>
-              <textarea
-                value={inputPrompt}
-                onChange={(e) => setInputPrompt(e.target.value)}
-                placeholder="e.g., feat: add user authentication system with OAuth 2.0 support"
-                rows={4}
-                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#8B5CF6] transition-colors resize-none mb-4"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
-              />
-              <Button
-                onClick={handleGenerate}
-                variant="solid"
-                size="default"
-                disabled={isGenerating || !inputPrompt.trim()}
-                className="w-full flex items-center justify-center gap-2"
-              >
-                <Sparkles className="w-4 h-4" />
-                {isGenerating ? 'Generating...' : 'Generate Content'}
-              </Button>
-            </div>
-
-            {/* Generated Content Preview */}
-            {generatedContent && (
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.3, ease: easings.smooth }}
-                className="space-y-4"
-              >
-                {/* Actions */}
-                <div className="flex gap-3">
-                  <Button
-                    onClick={handleGenerate}
-                    variant="ghost"
-                    size="default"
-                    disabled={isGenerating}
-                    className="flex items-center gap-2"
-                  >
-                    <RefreshCw className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
-                    Regenerate
-                  </Button>
-                  <Button
-                    onClick={handleSavePost}
-                    variant="solid"
-                    size="default"
-                    className="flex items-center gap-2"
-                  >
-                    <Save className="w-4 h-4" />
-                    Save Post
-                  </Button>
-                </div>
-
-                {/* Platform Cards */}
-                <div className="space-y-4">
-                  {/* LinkedIn */}
-                  <motion.div
-                    initial={{ scale: 0.98, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.1, duration: 0.3 }}
-                    className="bg-[#111111] border border-white/10 rounded-xl p-5 hover:border-blue-500/30 transition-all"
-                  >
-                    <h3 className="font-semibold text-white mb-3" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      LinkedIn
-                    </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      {generatedContent.linkedin}
-                    </p>
-                  </motion.div>
-
-                  {/* Twitter */}
-                  <motion.div
-                    initial={{ scale: 0.98, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.3 }}
-                    className="bg-[#111111] border border-white/10 rounded-xl p-5 hover:border-gray-500/30 transition-all"
-                  >
-                    <h3 className="font-semibold text-white mb-3" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      X (Twitter)
-                    </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      {generatedContent.twitter}
-                    </p>
-                  </motion.div>
-
-                  {/* Instagram */}
-                  <motion.div
-                    initial={{ scale: 0.98, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.3 }}
-                    className="bg-[#111111] border border-white/10 rounded-xl p-5 hover:border-pink-500/30 transition-all"
-                  >
-                    <h3 className="font-semibold text-white mb-3" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      Instagram
-                    </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      {generatedContent.instagram}
-                    </p>
-                  </motion.div>
-
-                  {/* Hashtags */}
-                  <motion.div
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.3 }}
-                    className="bg-[#111111] border border-white/10 rounded-xl p-5"
-                  >
-                    <h4 className="text-sm font-medium text-gray-300 mb-3" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                      Generated Hashtags
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {generatedContent.hashtags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-[#8B5CF6]/10 text-[#8B5CF6] rounded-lg text-sm font-medium"
-                          style={{ fontFamily: 'Manrope, sans-serif' }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
-
-          {/* Right Column - GitHub Commit History */}
-          <motion.div
-            initial={{ x: 20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5, ease: easings.smooth }}
-            className="lg:col-span-3 space-y-4"
+            className="lg:col-span-6 space-y-6"
           >
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-4">
-              <h2
-                className="text-lg font-semibold text-white mb-4 flex items-center gap-2"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
-              >
-                <GitCommit className="w-5 h-5 text-green-400" />
-                Recent Commits
-              </h2>
+            {/* AI Input */}
+            <div className="liquid-glass rounded-cards p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#00d2ff]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
-              {/* Commits List */}
-              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
-                {githubCommits.map((commit, index) => (
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00d2ff] to-blue-600 flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
+                  <h2 className="text-xl font-bold text-white font-geist">Generate Content</h2>
+                </div>
+
+                {selectedCommit && (
                   <motion.div
-                    key={commit.sha}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    onClick={() => handleSelectCommit(commit)}
-                    className={`bg-[#0a0a0a] border rounded-xl p-4 transition-all cursor-pointer
-                      ${selectedCommit?.sha === commit.sha
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/10'
-                        : 'border-white/5 hover:border-white/10'
-                      }
-                    `}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-4 flex items-center justify-between bg-[#00d2ff]/10 border border-[#00d2ff]/20 rounded-medium p-3"
                   >
-                    <p
-                      className="text-sm font-medium text-white mb-2 leading-snug"
-                      style={{ fontFamily: 'Manrope, sans-serif' }}
-                    >
-                      {commit.message}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold">
-                          {commit.author.charAt(0)}
-                        </div>
-                        <span className="text-xs text-gray-500" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                          {commit.author}
-                        </span>
-                      </div>
-                      <a
-                        href={commit.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-gray-500 hover:text-white transition-colors"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
+                    <div className="flex items-center gap-2">
+                      <GitCommit className="w-4 h-4 text-[#00d2ff]" />
+                      <span className="text-sm text-[#00d2ff] font-geist">{selectedCommit.message}</span>
                     </div>
+                    <button
+                      onClick={() => setSelectedCommit(null)}
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
+                      <XCircle className="w-4 h-4" />
+                    </button>
                   </motion.div>
-                ))}
+                )}
+
+                <textarea
+                  value={inputPrompt}
+                  onChange={(e) => setInputPrompt(e.target.value)}
+                  placeholder="Paste a commit message or describe your changes..."
+                  rows={4}
+                  className="w-full bg-white/5 border border-white/10 rounded-cards px-5 py-4 text-white placeholder-white/40 focus:outline-none focus:border-[#00d2ff] transition-colors resize-none mb-4 font-geist"
+                />
 
                 <Button
-                  variant="ghost"
-                  size="default"
-                  className="w-full flex items-center justify-center gap-2 text-sm"
+                  onClick={handleGenerate}
+                  variant="solid"
+                  size="lg"
+                  disabled={isGenerating || !inputPrompt.trim()}
+                  className="w-full flex items-center justify-center gap-2 font-geist"
                 >
-                  <RefreshCw className="w-4 h-4" />
-                  Refresh Commits
+                  <Sparkles className={`w-5 h-5 ${isGenerating ? 'animate-pulse' : ''}`} />
+                  {isGenerating ? 'Generating Magic...' : 'Generate Content'}
                 </Button>
               </div>
             </div>
 
-            {/* Stats Card */}
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-4">
-              <h2
-                className="text-lg font-semibold text-white mb-4"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
+            {/* Generated Content Preview */}
+            <AnimatePresence>
+              {generatedContent && (
+                <motion.div
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -30, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: easings.smooth }}
+                  className="space-y-4"
+                >
+                  {/* Actions */}
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={handleGenerate}
+                      variant="ghost"
+                      size="default"
+                      disabled={isGenerating}
+                      className="flex-1 font-geist"
+                    >
+                      <RefreshCw className={`w-4 h-4 mr-2 ${isGenerating ? 'animate-spin' : ''}`} />
+                      Regenerate
+                    </Button>
+                    <Button
+                      onClick={handleSavePost}
+                      variant="solid"
+                      size="default"
+                      className="flex-1 font-geist"
+                    >
+                      <Save className="w-4 h-4 mr-2" />
+                      Save Post
+                    </Button>
+                  </div>
+
+                  {/* Platform Cards */}
+                  {[
+                    { id: 'linkedin', name: 'LinkedIn', icon: '📘', gradient: 'from-blue-600 to-blue-800', content: generatedContent.linkedin },
+                    { id: 'twitter', name: 'X (Twitter)', icon: '𝕏', gradient: 'from-gray-800 to-gray-900', content: generatedContent.twitter },
+                    { id: 'instagram', name: 'Instagram', icon: '📸', gradient: 'from-pink-500 via-purple-500 to-orange-400', content: generatedContent.instagram },
+                  ].map((platform, i) => (
+                    <motion.div
+                      key={platform.id}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 + i * 0.08, duration: 0.4, ease: easings.smooth }}
+                      onMouseEnter={() => setHoveredPlatform(platform.id)}
+                      onMouseLeave={() => setHoveredPlatform(null)}
+                      className="liquid-glass rounded-cards p-6 relative overflow-hidden"
+                    >
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${platform.gradient} opacity-5 transition-opacity duration-300
+                          ${hoveredPlatform === platform.id ? 'opacity-10' : ''}
+                        `}
+                      />
+
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div
+                            className={`w-10 h-10 rounded-xl bg-gradient-to-br ${platform.gradient} flex items-center justify-center text-lg transition-transform duration-300
+                              ${hoveredPlatform === platform.id ? 'scale-110' : ''}
+                            `}
+                          >
+                            {platform.icon}
+                          </div>
+                          <h3 className="text-lg font-bold text-white font-geist">{platform.name}</h3>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed whitespace-pre-wrap font-geist">
+                          {platform.content}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+
+                  {/* Hashtags */}
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.4, ease: easings.smooth }}
+                    className="liquid-glass rounded-cards p-6"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <Zap className="w-5 h-5 text-[#00d2ff]" />
+                      <h3 className="text-sm font-bold text-white font-geist uppercase tracking-wider">Generated Hashtags</h3>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {generatedContent.hashtags.map((tag, index) => (
+                        <motion.span
+                          key={index}
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: index * 0.05 }}
+                          className="px-4 py-2 bg-[#00d2ff]/10 border border-[#00d2ff]/20 text-[#00d2ff] rounded-full text-sm font-medium font-geist"
+                        >
+                          {tag}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Right Column - GitHub Commits */}
+          <motion.div
+            initial={{ x: 30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5, ease: easings.smooth }}
+            className="lg:col-span-3 space-y-6"
+          >
+            <div className="liquid-glass rounded-cards p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-white font-geist flex items-center gap-2">
+                  <GitCommit className="w-5 h-5 text-green-400" />
+                  Recent Commits
+                </h2>
+              </div>
+
+              <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                {githubCommits.map((commit, index) => (
+                  <motion.div
+                    key={commit.sha}
+                    initial={{ x: 10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.05 }}
+                    onClick={() => handleSelectCommit(commit)}
+                    whileHover={{ x: 4 }}
+                    className={`bg-white/5 border rounded-cards p-4 transition-all cursor-pointer
+                      ${selectedCommit?.sha === commit.sha
+                        ? 'border-[#00d2ff] bg-[#00d2ff]/10'
+                        : 'border-white/5 hover:border-white/10'
+                      }
+                    `}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                        {commit.author.charAt(0)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white mb-2 leading-snug font-geist">
+                          {commit.message}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-white/40 font-geist">{commit.author}</span>
+                          <a
+                            href={commit.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-white/40 hover:text-white transition-colors"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <Button
+                variant="ghost"
+                size="default"
+                className="w-full mt-4 font-geist flex items-center justify-center gap-2"
               >
-                Quick Stats
-              </h2>
+                <RefreshCw className="w-4 h-4" />
+                Refresh Commits
+              </Button>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="liquid-glass rounded-cards p-6">
+              <h2 className="text-lg font-bold text-white mb-4 font-geist">Quick Actions</h2>
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-400 text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    Total Posts
-                  </span>
-                  <span className="text-white font-semibold" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    {posts.length}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-400 text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    Published
-                  </span>
-                  <span className="text-green-400 font-semibold" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    {posts.filter(p => p.isPublished).length}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-400 text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    Drafts
-                  </span>
-                  <span className="text-yellow-400 font-semibold" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    {posts.filter(p => !p.isPublished).length}
-                  </span>
-                </div>
+                {[
+                  { label: 'View All Posts', href: '/dashboard/posts', icon: FileText },
+                  { label: 'Schedule Content', href: '/dashboard/schedule', icon: Clock },
+                  { label: 'View Analytics', href: '/dashboard/analytics', icon: TrendingUp },
+                ].map((action, i) => (
+                  <motion.a
+                    key={i}
+                    href={action.href}
+                    initial={{ x: 10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.5 + i * 0.05 }}
+                    whileHover={{ x: 4 }}
+                    className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-cards hover:border-[#00d2ff]/30 transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <action.icon className="w-4 h-4 text-white/60 group-hover:text-[#00d2ff] transition-colors" />
+                      <span className="text-white/80 text-sm font-geist">{action.label}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
+                  </motion.a>
+                ))}
               </div>
             </div>
           </motion.div>

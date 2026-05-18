@@ -10,7 +10,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* Titan Design System Colors */
+        /* Aura Design System Colors */
+        brand: {
+          DEFAULT: '#3D81E3',
+        },
+        aura: {
+          dark: '#0c0c0c',
+          cyan: '#00d2ff',
+          cyanLight: '#A4F4FD',
+          navy: '#0B2551',
+          navyDark: '#091020',
+        },
+        /* Aurora Brand Colors */
+        brandGray: 'var(--color-brand-gray)',
+        /* Titan Design System Colors (for compatibility) */
         midnightInk: {
           DEFAULT: '#111111',
         },
@@ -102,6 +115,8 @@ const config: Config = {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       fontFamily: {
+        /* Aurora fonts */
+        inter: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         /* Titan fonts */
         geist: ['var(--font-geist)', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
         'geist-mono': ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],

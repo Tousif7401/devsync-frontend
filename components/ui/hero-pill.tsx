@@ -22,13 +22,13 @@ export default function HeroPill({
       target={isExternal ? "_blank" : undefined}
       className={cn(
         "inline-flex items-center gap-2",
-        "bg-offWhiteSage",
+        "bg-white/[0.03]",
         "border",
         "border-fadedStone",
         "rounded-buttons",
         "px-3 sm:px-4",
         "py-1 sm:py-1.5",
-        "text-midnightInk",
+        "text-white",
         "transition-colors duration-300",
         "hover:scale-[1.02]",
         "hover:bg-softConcrete",

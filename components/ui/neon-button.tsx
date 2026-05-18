@@ -7,10 +7,10 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "bg-canvasWhite hover:bg-offWhiteSage border-fadedStone text-midnightInk transition-all duration-200",
+                default: "bg-white/5 hover:bg-white/10 border-white/15 text-white transition-all duration-200",
                 solid: "bg-actionBlack hover:bg-midnightInk border-actionBlack text-canvasWhite transition-all duration-200",
-                ghost: "bg-canvasWhite hover:bg-offWhiteSage border-softConcrete text-midnightInk transition-colors",
-                hollow: "bg-canvasWhite hover:bg-offWhiteSage border-softConcrete text-midnightInk transition-colors",
+                ghost: "bg-white/5 hover:bg-white/10 border-white/10 text-white transition-colors",
+                hollow: "bg-white/5 hover:bg-white/10 border-white/10 text-white transition-colors",
             },
             size: {
                 default: "px-6 py-2.5 ",

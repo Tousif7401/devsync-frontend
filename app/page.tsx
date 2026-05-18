@@ -12,7 +12,9 @@ import { BackgroundPaths } from '@/components/ui/background-paths';
 import { Navbar, NavBody, NavItems, MobileNav, NavbarLogo, NavbarButton, MobileNavHeader, MobileNavToggle, MobileNavMenu } from '@/components/ui/resizable-navbar';
 import { Button } from '@/components/ui/neon-button';
 import { ArrowRight, Github, Linkedin, Zap, Shield, Clock, TrendingUp } from 'lucide-react';
-import LogoLoop from '@/components/ui/LogoLoop';
+// import { Sparkles } from '@/components/ui/sparkles';
+import { InfiniteSlider } from '@/components/ui/infinite-slider';
+import { ProgressiveBlur } from '@/components/ui/progressive-blur';
 import SocialIconBlock from '@/components/ui/SocialIconBlock';
 import { NeoMinimalFooter } from '@/components/ui/neo-minimal-footer';
 import HeroPill from '@/components/ui/hero-pill';
@@ -159,10 +161,34 @@ export default function Home() {
 
   return (
     <>
-      <main className="min-h-screen bg-canvasWhite overflow-x-hidden w-full relative">
+      <main className="min-h-screen bg-[#0c0c0c] overflow-x-hidden w-full relative">
+        {/* Fixed video background */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <video autoPlay loop muted playsInline
+            className="w-full h-full object-cover pointer-events-none"
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064122_c4750c0e-7476-4b44-94a2-a85a65c63bf2.mp4"
+          />
+        </div>
+
+        {/* Vertical guide lines - desktop only */}
+        <div className="hidden md:block pointer-events-none fixed inset-y-0 left-1/2 -translate-x-[calc(50%+36rem)] w-px bg-white/10 z-[5]" />
+        <div className="hidden md:block pointer-events-none fixed inset-y-0 left-1/2 translate-x-[calc(-50%+36rem)] w-px bg-white/10 z-[5]" />
+
+        {/* SVG noise filter - root level */}
+        <svg className="absolute w-0 h-0" aria-hidden="true">
+          <defs>
+            <filter id="c3-noise">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" />
+              <feComposite in2="SourceGraphic" operator="in" result="noise" />
+              <feBlend in="SourceGraphic" in2="noise" mode="multiply" />
+            </filter>
+          </defs>
+        </svg>
+
         {/* Navigation */}
         <Navbar>
-          <NavBody className={isScrolled ? 'bg-canvasWhite/95 backdrop-blur-xl border-b border-softConcrete' : ''}>
+          <NavBody className={isScrolled ? 'bg-black/40 backdrop-blur-xl border-b border-white/10' : ''}>
             <NavbarLogo />
             <div className="flex items-center gap-8">
               <NavItems items={navItems} />
@@ -170,7 +196,7 @@ export default function Home() {
                 <NavbarButton variant="secondary">Login</NavbarButton>
               </Link>
               <Link href="/demo">
-                <Button variant="solid" size="default" className="!py-2.5 !px-6 !text-base">Request for Demo</Button>
+                <Button variant="ghost" size="default" className="!py-2.5 !px-6 !text-base border border-white/15 hover:bg-white/5 text-white">Request for Demo</Button>
               </Link>
             </div>
         </NavBody>
@@ -220,11 +246,9 @@ export default function Home() {
           </MobileNav>
         </Navbar>
 
-        {/* Hero Section - Titan Design System */}
-        <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 pt-20 sm:pt-24 overflow-hidden w-full bg-canvasWhite">
-          <BackgroundPaths />
-
-          <div className="relative z-50 max-w-page mx-auto w-full">
+        {/* Hero Section - Aura Design System */}
+        <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 pt-20 sm:pt-28 overflow-hidden w-full bg-transparent">
+          <div className="relative z-50 max-w-6xl mx-auto w-full">
             <div className="text-center mb-8 sm:mb-12 md:mb-16 px-2">
               {/* Announcement Pill */}
               <HeroPill
@@ -238,19 +262,19 @@ export default function Home() {
               <motion.h1
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.6, ease: easings.smooth }}
-                className="font-geist font-bold text-3xl sm:text-4xl md:text-5xl lg:text-display leading-tight sm:leading-display text-midnightInk mb-4 sm:mb-6 break-words w-full"
+                transition={{ delay: 0.3, duration: 0.8, ease: easings.smooth }}
+                className="font-geist font-semibold text-4xl md:text-7xl tracking-tight leading-[0.9] text-white mb-8 break-words w-full"
               >
-                Turn Your GitHub <span className="font-mono text-actionBlack">commits</span> Into<br />
-                <HeroWordReveal text="Social  Stories That  Matter" delay={0.7} />
+                Turn Your GitHub <span className="font-mono text-brand">commits</span> Into<br />
+                <HeroWordReveal text="Social  Stories That  Matter" delay={0.5} className="gradient-text-shiny animate-shiny" />
               </motion.h1>
 
               {/* Subheading - fade up */}
               <motion.p
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.0, duration: 0.6, ease: easings.smooth }}
-                className="font-geist text-body-lg leading-body-lg text-gunmetalGray max-w-3xl mb-6 sm:mb-8 md:mb-10 text-center mx-auto px-2 break-words"
+                transition={{ delay: 0.5, duration: 0.6, ease: easings.smooth }}
+                className="font-geist text-white/60 max-w-3xl mb-6 sm:mb-8 md:mb-10 text-center mx-auto px-2 break-words text-base leading-[1.5]"
               >
                 Stop choosing between coding and building your brand. Every commit becomes content - automatically.
               </motion.p>
@@ -280,7 +304,7 @@ export default function Home() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Link href="/demo">
-                    <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
+                    <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2 bg-white text-black hover:bg-white/90">
                       Book a Demo
                       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 -rotate-45" />
                     </Button>
@@ -296,7 +320,7 @@ export default function Home() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Link href="#powerful-features">
-                    <Button variant="hollow" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
+                    <Button variant="hollow" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2 border-white/15 hover:bg-white/5 text-white">
                       View Services
                     </Button>
                   </Link>
@@ -307,53 +331,65 @@ export default function Home() {
         </section>
 
         {/* Integrations Section */}
-        <section className="relative z-10 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-offWhiteSage">
+        <section className="relative z-10 py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-transparent border-t border-white/10">
           <div className="max-w-page mx-auto text-center w-full">
             <FadeUp>
-              <p className="font-geist text-body leading-body text-gunmetalGray mb-8 sm:mb-10 md:mb-12">Integrated with your favorite platforms</p>
+              <p className="font-geist text-body leading-body text-white/40 mb-8 sm:mb-10 md:mb-12">Integrated with your favorite platforms</p>
             </FadeUp>
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="flex justify-center w-full overflow-hidden"
+              className="flex justify-center w-full"
             >
-              <div className="w-full overflow-hidden">
-                <LogoLoop
-                  logos={[
-                    { node: <SocialIconBlock icon="GitHub" containerSize={32} withShadow={false} hoverLift={false} openInNew={false} />, title: "GitHub", useIconLogo: true, iconSrc: "/Logos/github.png" },
-                    { node: <SocialIconBlock icon="X" containerSize={32} withShadow={false} hoverLift={false} openInNew={false} />, title: "X/Twitter", useIconLogo: true, iconSrc: "/Logos/twitter.png" },
-                    { node: <SocialIconBlock icon="LinkedIn" containerSize={32} withShadow={false} hoverLift={false} openInNew={false} />, title: "LinkedIn", useIconLogo: true, iconSrc: "/Logos/linkedin.png" },
-                    { node: <SocialIconBlock icon="Instagram" containerSize={32} withShadow={false} hoverLift={false} openInNew={false} />, title: "Instagram", useIconLogo: true, iconSrc: "/Logos/instagram.png" },
-                    { node: <SocialIconBlock icon="Gemini" containerSize={32} withShadow={false} hoverLift={false} openInNew={false} />, title: "Gemini", useIconLogo: true, iconSrc: "/Logos/gemini-color.svg" },
-                    { node: <SocialIconBlock icon="Vercel" containerSize={32} withShadow={false} hoverLift={false} openInNew={false} />, title: "Vercel", useIconLogo: true, iconSrc: "/Logos/vercel.svg" },
-                  ]}
-                  speed={50}
-                  direction="left"
-                  logoHeight={48}
-                  gap={24}
-                  fadeOut={true}
-                  scaleOnHover={true}
-                  fadeOutColor="#f3efeb"
-                  renderItem={(item) => (
-                    <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 bg-canvasWhite rounded-buttons border border-softConcrete">
-                      {item.useIconLogo ? (
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full flex-shrink-0">
+              <div className="relative w-full">
+                <div className="text-center text-3xl text-white mb-4 sm:mb-6">
+                  <span className="text-white/70">Trusted by experts.</span>
+                  <br />
+                  <span>Used by the leaders.</span>
+                </div>
+
+                <div className="relative mt-7 h-[100px] w-full">
+                  <InfiniteSlider
+                    className='flex h-full w-full items-center'
+                    duration={60}
+                    gap={48}
+                  >
+                    {[
+                      { iconSrc: "/Logos/github.png", title: "GitHub" },
+                      { iconSrc: "/Logos/twitter.png", title: "X/Twitter" },
+                      { iconSrc: "/Logos/linkedin.png", title: "LinkedIn" },
+                      { iconSrc: "/Logos/instagram.png", title: "Instagram" },
+                      { iconSrc: "/Logos/gemini-color.svg", title: "Gemini" },
+                      { iconSrc: "/Logos/vercel.svg", title: "Vercel" },
+                    ].map((logo, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 sm:gap-3 flex-shrink-0 px-4 sm:px-6 py-2 sm:py-3 bg-white/5 backdrop-blur-md rounded-full border border-white/10 transition-transform duration-300 ease-out hover:scale-110 hover:bg-white/10"
+                      >
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full flex-shrink-0">
                           <img
-                            src={item.iconSrc}
-                            alt={item.title}
-                            className="w-3 h-3 sm:w-4 sm:h-4"
-                            style={{ filter: 'none' }}
+                            src={logo.iconSrc}
+                            alt={logo.title}
+                            className="w-5 h-5 sm:w-6 sm:h-6"
                           />
                         </div>
-                      ) : (
-                        item.node
-                      )}
-                      <span className="font-geist text-body leading-body text-midnightInk text-xs sm:text-sm md:text-base font-normal truncate max-w-full">{item.title}</span>
-                    </div>
-                  )}
-                />
+                        <span className="font-geist text-white text-xs sm:text-sm md:text-base font-normal truncate max-w-full">{logo.title}</span>
+                      </div>
+                    ))}
+                  </InfiniteSlider>
+                  <ProgressiveBlur
+                    className='pointer-events-none absolute top-0 left-0 h-full w-[100px] sm:w-[200px]'
+                    direction='left'
+                    blurIntensity={1}
+                  />
+                  <ProgressiveBlur
+                    className='pointer-events-none absolute top-0 right-0 h-full w-[100px] sm:w-[200px]'
+                    direction='right'
+                    blurIntensity={1}
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
@@ -369,19 +405,19 @@ export default function Home() {
         <ContentOutputTypes />
 
         {/* Watch DevSync AI in Action - Live Demo */}
-        <section id="watch-devsync-ai-in-action" className="relative z-10 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-canvasWhite">
+        <section id="watch-devsync-ai-in-action" className="relative z-10 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-transparent border-t border-white/10">
           <div className="max-w-page mx-auto w-full">
             <div className="relative z-20 text-center mb-8 sm:mb-12 md:mb-16 px-2 sm:px-4">
-              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-midnightInk mb-4 sm:mb-6 break-words">
+              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-white mb-4 sm:mb-6 break-words">
                 Watch DevSync AI in Action
               </SectionHeading>
-              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-gunmetalGray max-w-2xl mx-auto break-words">
+              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-white/60 max-w-2xl mx-auto break-words">
                 See how your commits are transformed into engaging social content—automatically.
               </SectionSubheading>
             </div>
 
             <FadeUp delay={0.2} className="flex justify-center w-full">
-              <div className="w-full max-w-4xl h-[450px] sm:h-[500px] md:h-[550px] border border-softConcrete rounded-cards bg-offWhiteSage p-4 sm:p-6 flex items-start justify-center overflow-hidden">
+              <div className="w-full max-w-4xl h-[450px] sm:h-[500px] md:h-[550px] liquid-glass rounded-cards p-4 sm:p-6 flex items-start justify-center overflow-hidden">
                 <DevSyncOverviewCard />
               </div>
             </FadeUp>
@@ -389,13 +425,13 @@ export default function Home() {
         </section>
 
         {/* Benefits/Results Section */}
-        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-offWhiteSage">
+        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-transparent border-t border-white/10">
           <div className="max-w-page mx-auto w-full">
             <div className="text-center mb-12 sm:mb-16 md:mb-20 px-2">
-              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-midnightInk mb-4 sm:mb-6 break-words">
+              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-white mb-4 sm:mb-6 break-words">
                 DevSync AI Results
               </SectionHeading>
-              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-gunmetalGray break-words">
+              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-white/60 break-words">
                 Transform your development workflow into a content engine
               </SectionSubheading>
             </div>
@@ -426,19 +462,19 @@ export default function Home() {
                 <StaggerCard key={index}>
                   <motion.div
                     whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                    className="rounded-cards p-8 border border-softConcrete bg-canvasWhite hover:border-actionBlack transition-colors duration-300 flex flex-col h-full"
+                    className="liquid-glass rounded-cards p-8 transition-colors duration-300 flex flex-col h-full"
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.12 + 0.3, type: "spring", stiffness: 200 }}
-                      className="w-10 h-10 bg-actionBlack rounded-full flex items-center justify-center mb-4 flex-shrink-0"
+                      className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center mb-4 flex-shrink-0"
                     >
-                      <span className="text-canvasWhite">{benefit.icon}</span>
+                      <span className="text-white">{benefit.icon}</span>
                     </motion.div>
-                    <h3 className="font-geist font-bold text-heading-sm leading-heading-sm text-midnightInk mb-3">{benefit.title}</h3>
-                    <p className="font-geist text-body leading-body text-gunmetalGray leading-relaxed flex-1">{benefit.description}</p>
+                    <h3 className="font-geist font-bold text-heading-sm leading-heading-sm text-white mb-3">{benefit.title}</h3>
+                    <p className="font-geist text-body leading-body text-white/60 leading-relaxed flex-1">{benefit.description}</p>
                   </motion.div>
                 </StaggerCard>
               ))}
@@ -447,13 +483,13 @@ export default function Home() {
         </section>
 
         {/* FAQ Section */}
-        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-canvasWhite">
+        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-transparent border-t border-white/10">
           <div className="max-w-page mx-auto w-full">
             <div className="text-center mb-12 sm:mb-16 px-2">
-              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-midnightInk mb-4 break-words">
+              <SectionHeading className="font-geist font-bold text-heading-lg leading-heading-lg text-white mb-4 break-words">
                 Got Questions?
               </SectionHeading>
-              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-gunmetalGray break-words">
+              <SectionSubheading className="font-geist text-body-lg leading-body-lg text-white/60 break-words">
                 Quick answers about DevSync AI
               </SectionSubheading>
             </div>
@@ -483,12 +519,12 @@ export default function Home() {
               ].map((faq, index) => (
                 <StaggerCard key={index}>
                   <motion.details
-                    className="group bg-offWhiteSage rounded-cards border border-softConcrete hover:border-actionBlack transition-colors"
+                    className="liquid-glass rounded-cards transition-colors"
                   >
                     <summary className="flex items-center justify-between p-4 sm:p-6 cursor-pointer">
-                      <h3 className="font-geist font-medium text-body-lg leading-body-lg text-midnightInk pr-2 sm:pr-4 break-words">{faq.q}</h3>
+                      <h3 className="font-geist font-medium text-body-lg leading-body-lg text-white pr-2 sm:pr-4 break-words">{faq.q}</h3>
                       <motion.svg
-                        className="w-4 h-4 sm:w-5 sm:h-5 text-gunmetalGray flex-shrink-0"
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-white/60 flex-shrink-0"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -497,7 +533,7 @@ export default function Home() {
                       </motion.svg>
                     </summary>
                     <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-                      <p className="font-geist text-body-lg leading-body-lg text-gunmetalGray leading-relaxed break-words">{faq.a}</p>
+                      <p className="font-geist text-body-lg leading-body-lg text-white/60 leading-relaxed break-words">{faq.a}</p>
                     </div>
                   </motion.details>
                 </StaggerCard>
@@ -511,12 +547,12 @@ export default function Home() {
         </section>
 
         {/* Final CTA */}
-        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-offWhiteSage">
+        <section className="relative z-10 py-20 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 overflow-hidden w-full bg-transparent border-t border-white/10">
           <div className="max-w-page mx-auto text-center w-full">
-            <SectionHeading className="font-geist font-bold text-heading leading-heading text-midnightInk mb-4 sm:mb-6 break-words">
+            <SectionHeading className="font-geist font-bold text-heading leading-heading text-white mb-4 sm:mb-6 break-words">
               Your commits have stories.<br />Let's tell them.
             </SectionHeading>
-            <SectionSubheading delay={0.15} className="font-geist text-body-lg leading-body-lg text-gunmetalGray mb-8 sm:mb-10 max-w-2xl mx-auto break-words">
+            <SectionSubheading delay={0.15} className="font-geist text-body-lg leading-body-lg text-white/60 mb-8 sm:mb-10 max-w-2xl mx-auto break-words">
               Join thousands of developers building their brand while they code. Start your free trial today.
             </SectionSubheading>
 
@@ -545,7 +581,7 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
               >
                 <Link href="/demo">
-                  <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
+                  <Button variant="solid" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2 bg-white text-black hover:bg-white/90">
                     Start Free Trial
                     <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
@@ -560,7 +596,7 @@ export default function Home() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button variant="ghost" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2">
+                <Button variant="ghost" size="lg" className="!px-6 !py-1.5 sm:!px-10 sm:!py-2.5 text-sm sm:text-base font-medium flex items-center gap-2 border-white/15 hover:bg-white/5 text-white">
                   <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                   Connect GitHub
                 </Button>

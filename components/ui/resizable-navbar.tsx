@@ -61,7 +61,7 @@ export const NavBody = ({ children, className }: { children: React.ReactNode; cl
       animate={{ y: isVisible ? 0 : -100 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        "hidden md:flex relative items-center justify-between px-4 py-4 sm:px-8 lg:px-20 w-full bg-canvasWhite border-b border-fadedStone",
+        "hidden md:flex relative items-center justify-between px-4 py-4 sm:px-8 lg:px-20 w-full bg-black/40 backdrop-blur-md border-b border-white/10",
         className
       )}
     >
@@ -77,7 +77,7 @@ export const NavItems = ({ items, className }: { items: Array<{ name: string; li
         <a
           key={`nav-link-${idx}`}
           href={item.link}
-          className="relative text-midnightInk hover:text-midnightInk transition-colors text-base font-normal font-geist rounded-navigation px-[18px] py-[11px]"
+          className="relative text-white hover:text-white transition-colors text-base font-normal font-geist rounded-navigation px-[18px] py-[11px]"
         >
           {item.name}
         </a>
@@ -87,7 +87,7 @@ export const NavItems = ({ items, className }: { items: Array<{ name: string; li
 };
 
 export const MobileNav = ({ children, className, isOpen }: { children: React.ReactNode; className?: string; isOpen?: boolean }) => {
-  return <div className={cn("md:hidden", isOpen && "bg-canvasWhite border-b border-fadedStone", className)}>{children}</div>;
+  return <div className={cn("md:hidden", isOpen && "bg-black/40 backdrop-blur-md border-b border-white/10", className)}>{children}</div>;
 };
 
 export const MobileNavHeader = ({ children, className, isOpen }: { children: React.ReactNode; className?: string; isOpen?: boolean }) => {
@@ -103,7 +103,7 @@ export const MobileNavHeader = ({ children, className, isOpen }: { children: Rea
   }, []);
 
   return (
-    <div className={cn("flex items-center justify-between px-6 py-4 transition-colors duration-300 bg-canvasWhite border-b border-fadedStone", className)}>
+    <div className={cn("flex items-center justify-between px-6 py-4 transition-colors duration-300 bg-black/40 backdrop-blur-md border-b border-white/10", className)}>
       {children}
     </div>
   );
@@ -111,7 +111,7 @@ export const MobileNavHeader = ({ children, className, isOpen }: { children: Rea
 
 export const NavbarLogo = () => {
   return (
-    <a href="#" className="text-xl font-bold text-midnightInk tracking-tight font-geist">
+    <a href="#" className="text-xl font-bold text-white tracking-tight font-geist">
       DevSync AI
     </a>
   );
@@ -154,7 +154,7 @@ export const MobileNavToggle = ({
   return (
     <button
       onClick={onClick}
-      className="p-2 text-midnightInk hover:bg-offWhiteSage rounded-navigation transition-colors"
+      className="p-2 text-white hover:bg-white/5 rounded-navigation transition-colors"
     >
       {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
     </button>
@@ -178,7 +178,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3 }}
-          className="overflow-hidden bg-canvasWhite border-b border-fadedStone"
+          className="overflow-hidden bg-black/40 backdrop-blur-md border-b border-white/10"
         >
           <div className="px-6 py-4 space-y-4">
             {children}

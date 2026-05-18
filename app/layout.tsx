@@ -19,7 +19,7 @@ export default function RootLayout({
         {/* Performance optimizations for Windows browsers */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
-      <body className={`${geist.variable} ${geistMono.variable} font-geist antialiased bg-canvasWhite text-midnightInk`}>
+      <body className={`${geist.variable} ${geistMono.variable} font-geist antialiased bg-[#0c0c0c] text-white`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
           {children}
         </ThemeProvider>

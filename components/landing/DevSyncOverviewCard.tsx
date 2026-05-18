@@ -46,35 +46,35 @@ const MOCK_TASKS: TaskItem[] = [
 
 const STATUS_COLORS = {
   done: {
-    bg: 'bg-emerald-50',
-    border: 'border-emerald-200',
-    iconBg: 'bg-emerald-100',
-    iconColor: 'text-emerald-600',
-    textColor: 'text-emerald-600',
+    bg: 'bg-emerald-900/20',
+    border: 'border-emerald-500/30',
+    iconBg: 'bg-emerald-800/30',
+    iconColor: 'text-emerald-400',
+    textColor: 'text-emerald-400',
     label: 'Done'
   },
   progress: {
     bg: 'bg-highlightOrange/10',
     border: 'border-highlightOrange/30',
     iconBg: 'bg-highlightOrange/15',
-    iconColor: 'text-highlightOrange',
-    textColor: 'text-highlightOrange',
+    iconColor: 'text-aura-cyan',
+    textColor: 'text-aura-cyan',
     label: 'In Progress'
   },
   blocked: {
-    bg: 'bg-red-50',
-    border: 'border-red-200',
-    iconBg: 'bg-red-100',
-    iconColor: 'text-red-600',
-    textColor: 'text-red-600',
+    bg: 'bg-red-900/20',
+    border: 'border-red-500/30',
+    iconBg: 'bg-red-800/30',
+    iconColor: 'text-red-400',
+    textColor: 'text-red-400',
     label: 'Blocked'
   },
   waiting: {
-    bg: 'bg-offWhiteSage',
-    border: 'border-fadedStone',
-    iconBg: 'bg-fadedStone',
-    iconColor: 'text-gunmetalGray',
-    textColor: 'text-gunmetalGray',
+    bg: 'bg-white/[0.03]',
+    border: 'border-white/10',
+    iconBg: 'bg-white/10',
+    iconColor: 'text-white/60',
+    textColor: 'text-white/60',
     label: 'Waiting'
   }
 };
@@ -126,16 +126,16 @@ export default function DevSyncOverviewCard() {
   return (
     <div ref={ref} className="w-full h-full">
       {/* Browser Frame - Titan Style */}
-      <div className="bg-canvasWhite border border-fadedStone rounded-cards overflow-hidden h-full flex flex-col relative">
+      <div className="bg-black/50 border border-white/10 rounded-cards overflow-hidden h-full flex flex-col relative">
         {/* Browser Header */}
-        <div className="bg-offWhiteSage border-b border-fadedStone px-3 py-2 flex items-center gap-2 shrink-0">
+        <div className="bg-white/[0.03] border-b border-white/10 px-3 py-2 flex items-center gap-2 shrink-0">
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
             <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
           </div>
-          <div className="flex-1 mx-2 bg-canvasWhite rounded-navigation h-5 max-w-xs flex items-center px-3 border border-fadedStone">
-            <span className="text-[10px] text-gunmetalGray font-geist">devsync.ai/overview</span>
+          <div className="flex-1 mx-2 bg-black/50 rounded-navigation h-5 max-w-xs flex items-center px-3 border border-white/10">
+            <span className="text-[10px] text-white/60 font-geist">devsync.ai/overview</span>
           </div>
         </div>
 
@@ -149,10 +149,10 @@ export default function DevSyncOverviewCard() {
             className="bg-highlightOrange/5 rounded-medium p-3 border border-highlightOrange/20 mb-4 shrink-0"
           >
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-4 h-4 text-highlightOrange" />
-              <span className="text-xs text-highlightOrange font-semibold font-geist">AI Processing Summary</span>
+              <Sparkles className="w-4 h-4 text-white" />
+              <span className="text-xs text-white font-semibold font-geist">AI Processing Summary</span>
             </div>
-            <p className="text-xs text-gunmetalGray font-geist">
+            <p className="text-xs text-white/60 font-geist">
               {tasks.filter(t => t.status === 'done').length} task{tasks.filter(t => t.status === 'done').length !== 1 ? 's' : ''} completed,{' '}
               {tasks.filter(t => t.status === 'progress').length > 0 ? '1 in progress' : 'processing complete'}
             </p>
@@ -190,23 +190,23 @@ export default function DevSyncOverviewCard() {
                             animate={{ scale: 1 }}
                             transition={{ type: 'spring', stiffness: 200 }}
                           >
-                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
                           </motion.div>
                         )}
                         {task.status === 'progress' && (
                           <div className="w-2 h-2 bg-highlightOrange rounded-full animate-pulse" />
                         )}
                         {task.status === 'blocked' && (
-                          <AlertCircle className="w-3.5 h-3.5 text-red-600" />
+                          <AlertCircle className="w-3.5 h-3.5 text-red-400" />
                         )}
                         {task.status === 'waiting' && (
-                          <Code2 className="w-3.5 h-3.5 text-gunmetalGray" />
+                          <Code2 className="w-3.5 h-3.5 text-white/60" />
                         )}
                       </div>
 
                       {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs text-midnightInk font-medium font-geist break-words">{task.title}</p>
+                        <p className="text-xs text-white font-medium font-geist break-words">{task.title}</p>
                         {task.description && (
                           <span className={`text-xs ${colors.textColor} block font-geist break-words`}>{task.description}</span>
                         )}

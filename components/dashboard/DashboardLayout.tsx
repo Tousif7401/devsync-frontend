@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Home, FileText, Settings, BarChart3, Clock, LogOut, Menu, X, User, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
@@ -16,7 +17,7 @@ const easings = {
 };
 
 const navItems = [
-  { icon: Home, label: 'Dashboard', href: '/dashboard', active: true },
+  { icon: Home, label: 'Dashboard', href: '/dashboard' },
   { icon: FileText, label: 'Posts', href: '/dashboard/posts' },
   { icon: User, label: 'Profile', href: '/dashboard/profile' },
   { icon: BarChart3, label: 'Analytics', href: '/dashboard/analytics' },
@@ -25,6 +26,7 @@ const navItems = [
 ];
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -36,7 +38,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex">
+    <div className="min-h-screen bg-[#0c0c0c] flex">
       {/* Mobile overlay */}
       <AnimatePresence>
         {isSidebarOpen && (
@@ -57,7 +59,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           flex flex-col
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${isCollapsed ? 'w-[65px]' : 'w-[250px]'}
-          bg-[#111111] border-r border-white/10
+          bg-[#0c0c0c] border-r border-white/5
         `}
       >
         {/* Header */}
@@ -87,8 +89,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.15, duration: 0.2 }}
-                className="text-lg font-semibold text-white whitespace-nowrap"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
+                className="text-lg font-semibold text-white whitespace-nowrap font-geist"
               >
                 DevSync AI
               </motion.span>
@@ -108,57 +109,58 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Navigation */}
         <nav className="flex-1 p-2 space-y-1">
-          {navItems.map((item, index) => (
-            <div key={item.label} className="relative">
-              <Link
-                href={item.href}
-                onClick={() => setIsSidebarOpen(false)}
-                onMouseEnter={() => setHoveredItem(item.label)}
-                onMouseLeave={() => setHoveredItem(null)}
-              >
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.05, duration: 0.3, ease: easings.smooth }}
-                  className={`
-                    flex items-center gap-3 px-3 py-3 rounded-xl transition-all
-                    ${item.active
-                      ? 'bg-[#8B5CF6]/10 text-[#8B5CF6]'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
-                    }
-                  `}
+          {navItems.map((item, index) => {
+            const isActive = pathname === item.href;
+            return (
+              <div key={item.label} className="relative">
+                <Link
+                  href={item.href}
+                  onClick={() => setIsSidebarOpen(false)}
+                  onMouseEnter={() => setHoveredItem(item.label)}
+                  onMouseLeave={() => setHoveredItem(null)}
                 >
-                  <item.icon className="w-5 h-5 shrink-0" />
-                  {!isCollapsed && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.15, duration: 0.2 }}
-                      className="font-medium whitespace-nowrap"
-                      style={{ fontFamily: 'Manrope, sans-serif' }}
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.05, duration: 0.3, ease: easings.smooth }}
+                    className={`
+                      flex items-center gap-3 px-3 py-3 rounded-xl transition-all
+                      ${isActive
+                        ? 'bg-[#00d2ff]/10 text-[#00d2ff]'
+                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      }
+                    `}
+                  >
+                    <item.icon className="w-5 h-5 shrink-0" />
+                    {!isCollapsed && (
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.15, duration: 0.2 }}
+                        className="font-medium whitespace-nowrap font-geist"
+                      >
+                        {item.label}
+                      </motion.span>
+                    )}
+                  </motion.div>
+                </Link>
+                {/* Tooltip for collapsed state */}
+                <AnimatePresence>
+                  {isCollapsed && hoveredItem === item.label && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute left-[70px] top-1/2 -translate-y-1/2 bg-black/80 border border-white/10 px-3 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap z-50 shadow-xl backdrop-blur-sm font-geist"
                     >
                       {item.label}
-                    </motion.span>
+                    </motion.div>
                   )}
-                </motion.div>
-              </Link>
-              {/* Tooltip for collapsed state */}
-              <AnimatePresence>
-                {isCollapsed && hoveredItem === item.label && (
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-[70px] top-1/2 -translate-y-1/2 bg-[#1a1a1a] border border-white/10 px-3 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap z-50 shadow-xl"
-                    style={{ fontFamily: 'Manrope, sans-serif' }}
-                  >
-                    {item.label}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </nav>
 
         {/* Logout */}
@@ -176,8 +178,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.15, duration: 0.2 }}
-                className="font-medium whitespace-nowrap"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
+                className="font-medium whitespace-nowrap font-geist"
               >
                 Logout
               </motion.span>
@@ -189,7 +190,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Mobile menu button */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-30 w-10 h-10 bg-[#111111] border border-white/10 rounded-lg flex items-center justify-center text-white"
+        className="lg:hidden fixed top-4 left-4 z-30 w-10 h-10 bg-[#0c0c0c] border border-white/10 rounded-lg flex items-center justify-center text-white"
       >
         {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>

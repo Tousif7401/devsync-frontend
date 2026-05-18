@@ -182,34 +182,26 @@ export default function AIInput() {
     >
       {/* AI Assistant Container - Titan Style */}
       <div className="relative">
-        {/* Subtle glow */}
-        <div className="absolute -inset-[1px] bg-gradient-to-r from-fadedStone via-fadedStone to-fadedStone rounded-[24px] blur-xl" />
-
-        <div className="relative bg-canvasWhite rounded-cards sm:rounded-[24px] border border-softConcrete overflow-hidden">
+        <div className="relative bg-black/30 backdrop-blur-md rounded-cards sm:rounded-[24px] border border-white/15 overflow-hidden">
           {/* Header - Minimal and Clean */}
-          <div className="px-4 sm:px-6 py-4 sm:py-6 border-b border-softConcrete">
+          <div className="px-4 sm:px-6 py-4 sm:py-6 border-b border-white/15">
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* AI Avatar with subtle pulse */}
+              {/* AI Avatar */}
               <div className="relative">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-actionBlack/20 to-actionBlack/20 rounded-full blur-lg opacity-30"
-                  animate={{ opacity: [0.3, 0.5, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-offWhiteSage flex items-center justify-center">
-                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-midnightInk" />
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/[0.03] flex items-center justify-center">
+                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
               </div>
 
               <div className="flex-1 text-left min-w-0">
-                <h3 className="text-midnightInk font-semibold text-sm sm:text-lg break-words font-geist">Ask anything about DevSync</h3>
-                <p className="text-gunmetalGray text-xs sm:text-sm break-words font-geist">Get instant answers about your workflow</p>
+                <h3 className="text-white font-semibold text-sm sm:text-lg break-words font-geist">Ask anything about DevSync</h3>
+                <p className="text-white/60 text-xs sm:text-sm break-words font-geist">Get instant answers about your workflow</p>
               </div>
 
               {/* Status indicator */}
-              <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-offWhiteSage border border-softConcrete flex-shrink-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/[0.03] border border-white/15 flex-shrink-0">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-midnightInk text-[10px] sm:text-xs font-medium font-geist">Online</span>
+                <span className="text-white text-[10px] sm:text-xs font-medium font-geist">Online</span>
               </div>
             </div>
           </div>
@@ -228,17 +220,17 @@ export default function AIInput() {
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-cards bg-offWhiteSage border border-fadedStone flex items-center justify-center mb-4 sm:mb-6"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-cards bg-white/[0.03] border border-white/10 flex items-center justify-center mb-4 sm:mb-6"
                   >
-                    <MessageSquare className="w-8 h-8 sm:w-10 sm:h-10 text-midnightInk" />
+                    <MessageSquare className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                   </motion.div>
-                  <h4 className="text-midnightInk text-lg sm:text-xl font-semibold mb-2 font-geist">Talk to DevSync AI</h4>
-                  <p className="text-gunmetalGray text-sm sm:text-base max-w-md px-2 break-words font-geist">
+                  <h4 className="text-white text-lg sm:text-xl font-semibold mb-2 font-geist">Talk to DevSync AI</h4>
+                  <p className="text-white/60 text-sm sm:text-base max-w-md px-2 break-words font-geist">
                     I have real-time knowledge of our platform. Ask me about GitHub integration, social platforms, pricing, or anything else.
                   </p>
 
                   {/* Example questions as cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3 w-full max-w-2xl mt-4 sm:mt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5 sm:gap-2 w-full max-w-2xl mt-3 sm:mt-4">
                     {EXAMPLE_QUESTIONS.map((question, index) => (
                       <motion.button
                         key={question}
@@ -246,9 +238,9 @@ export default function AIInput() {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.3 + index * 0.1 }}
                         onClick={() => setInput(question)}
-                        className="px-3 sm:px-4 py-2 sm:py-3 bg-offWhiteSage hover:bg-fadedStone border border-softConcrete hover:border-actionBlack rounded-buttons text-left transition-all group"
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 bg-white/[0.03] hover:bg-white/10 border border-white/15 hover:border-brand rounded-buttons text-left transition-all group"
                       >
-                        <p className="text-gunmetalGray text-xs sm:text-sm group-hover:text-midnightInk transition-colors break-words font-geist">
+                        <p className="text-white/60 text-[10px] sm:text-xs group-hover:text-white transition-colors break-words font-geist">
                           {question}
                         </p>
                       </motion.button>
@@ -268,16 +260,16 @@ export default function AIInput() {
                   <div className={`max-w-[85%] ${
                     message.role === 'user'
                       ? 'bg-actionBlack rounded-cards rounded-tr-md px-3 sm:px-5 py-2.5 sm:py-3.5'
-                      : 'bg-offWhiteSage rounded-cards rounded-tl-md px-3 sm:px-5 py-2.5 sm:py-3.5 border border-softConcrete'
+                      : 'bg-white/[0.03] rounded-cards rounded-tl-md px-3 sm:px-5 py-2.5 sm:py-3.5 border border-white/15'
                   }`}>
                     <p className={`text-[14px] sm:text-[15px] leading-relaxed font-geist ${
-                      message.role === 'user' ? 'text-canvasWhite' : 'text-midnightInk'
+                      message.role === 'user' ? 'text-white' : 'text-white'
                     }`}>
                       {message.role === 'assistant' && message.isStreaming
                         ? message.displayedContent
                         : message.content}
                       {message.role === 'assistant' && message.isStreaming && message.displayedContent.length > 0 && (
-                        <span className="inline-block w-0.5 h-4 bg-midnightInk animate-pulse ml-0.5 align-text-bottom" />
+                        <span className="inline-block w-0.5 h-4 bg-white animate-pulse ml-0.5 align-text-bottom" />
                       )}
                     </p>
                   </div>
@@ -292,22 +284,22 @@ export default function AIInput() {
                   exit={{ opacity: 0 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-offWhiteSage rounded-cards rounded-tl-md px-4 sm:px-5 py-3 sm:py-4 border border-softConcrete flex items-center gap-2">
+                  <div className="bg-white/[0.03] rounded-cards rounded-tl-md px-4 sm:px-5 py-3 sm:py-4 border border-white/15 flex items-center gap-2">
                     <div className="flex gap-1">
                       <motion.div
                         animate={{ y: [0, -4, 0] }}
                         transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                        className="w-1.5 h-1.5 rounded-full bg-gunmetalGray"
+                        className="w-1.5 h-1.5 rounded-full bg-white/60"
                       />
                       <motion.div
                         animate={{ y: [0, -4, 0] }}
                         transition={{ duration: 0.6, repeat: Infinity, delay: 0.15 }}
-                        className="w-1.5 h-1.5 rounded-full bg-gunmetalGray"
+                        className="w-1.5 h-1.5 rounded-full bg-white/60"
                       />
                       <motion.div
                         animate={{ y: [0, -4, 0] }}
                         transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }}
-                        className="w-1.5 h-1.5 rounded-full bg-gunmetalGray"
+                        className="w-1.5 h-1.5 rounded-full bg-white/60"
                       />
                     </div>
                     <ShiningText text={thinkingText} className="text-sm font-geist" />
@@ -318,18 +310,16 @@ export default function AIInput() {
           </div>
           {/* Input Area - Minimal and Elegant */}
           <div className="px-4 sm:px-8 pb-4 sm:pb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-softConcrete to-softConcrete rounded-cards sm:rounded-cards blur-xl opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative flex items-center gap-2 sm:gap-3 bg-offWhiteSage rounded-cards sm:rounded-cards border border-softConcrete focus-within:border-actionBlack transition-colors">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  placeholder="Ask anything about DevSync..."
-                  className="flex-1 px-3 sm:px-5 py-2.5 sm:py-4 bg-transparent text-midnightInk placeholder-gunmetalGray rounded-cards focus:outline-none text-[14px] sm:text-[15px] font-geist"
-                  disabled={isLoading}
-                />
+            <div className="relative flex items-center gap-2 sm:gap-3 bg-white/[0.03] rounded-cards sm:rounded-cards border border-white/15 focus-within:border-brand transition-colors">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyPress}
+                placeholder="Ask anything about DevSync..."
+                className="flex-1 px-3 sm:px-5 py-2.5 sm:py-4 bg-transparent text-white placeholder-white/40 rounded-cards focus:outline-none text-[14px] sm:text-[15px] font-geist"
+                disabled={isLoading}
+              />
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -338,26 +328,25 @@ export default function AIInput() {
                   className={`
                     m-1 sm:m-1.5 p-2 sm:p-3 rounded-buttons transition-all font-geist
                     ${isLoading || !input.trim()
-                      ? 'bg-softConcrete text-gunmetalGray cursor-not-allowed'
-                      : 'bg-actionBlack text-canvasWhite'
+                      ? 'bg-white/10 text-white/60 cursor-not-allowed'
+                      : 'bg-actionBlack text-white'
                     }
                   `}
                 >
                   <Send className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.button>
               </div>
-            </div>
 
             {/* Helper text */}
             <div className="flex items-center justify-between mt-2 sm:mt-3">
-              <p className="text-gunmetalGray text-[10px] sm:text-xs font-geist">
+              <p className="text-white/60 text-[10px] sm:text-xs font-geist">
                 Powered by AI • Responses may vary
               </p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleReset}
-                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-buttons bg-offWhiteSage hover:bg-fadedStone border border-softConcrete text-gunmetalGray hover:text-midnightInk transition-all font-geist"
+                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-buttons bg-white/[0.03] hover:bg-white/10 border border-white/15 text-white/60 hover:text-white transition-all font-geist"
               >
                 <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 <span className="text-[10px] sm:text-xs font-medium">Reset</span>
