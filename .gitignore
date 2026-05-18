@@ -33,3 +33,9 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude & Design files
+.claude/
+Design.md
+frontend-design/
+sleekDesign.md
